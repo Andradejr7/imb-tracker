@@ -1,0 +1,72 @@
+const express = require('express');
+const axios = require('axios');
+const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
+require('dotenv').config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+const DATA_FILE = path.join(__dirname, 'data.json');
+
+function loadData() {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    }
+  } catch(e) {}
+  return { partidas: [] };
+}
+
+function saveData(data) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+}
+
+// Rota: carregar dados
+app.get('/api/data', (req, res) => {
+  res.json(loadData());
+});
+
+// Rota: salvar dados
+app.post('/api/data', (req, res) => {
+  try {
+    saveData(req.body);
+    res.json({ success: true });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Proxy para tracker.gg
+app.get('/api/matches/:player', async (req, res) => {
+  try {
+    const { player } = req.params;
+    const url = `https://api.tracker.gg/api/v2/r6siege/standard/matches/psn/${encodeURIComponent(player)}?gamemode=pvp_ranked`;
+    const response = await axios.get(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json',
+        'Accept-Language': 'pt-BR,pt;q=0.9',
+        'Referer': 'https://r6.tracker.network/',
+        'Origin': 'https://r6.tracker.network',
+        'Cookie': process.env.TRN_COOKIES || '',
+      }
+    });
+    res.json(response.data);
+  } catch(e) {
+    const status = e.response?.status || 500;
+    res.status(status).json({ error: e.response?.data || e.message });
+  }
+});
+
+app.get('/api/status', (req, res) => {
+  res.json({ status: 'online' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`\nIMB Tracker rodando em http://localhost:${PORT}\n`);
+});

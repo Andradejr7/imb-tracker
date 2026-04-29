@@ -1,0 +1,432 @@
+{
+  "partidas": [
+    {
+      "data": "2026-04-28",
+      "mapa": "Border",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 9,
+          "assistencias": 6,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 1,
+          "assistencias": 0,
+          "plants": 1,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 9,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 7,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1777424911753
+    },
+    {
+      "data": "2026-04-28",
+      "mapa": "Kafe Dostoyevsky",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 0,
+          "det": [
+            "+1 (mais kills)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 1,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 0,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 2,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 0,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        }
+      ],
+      "ts": 1777425387270
+    },
+    {
+      "data": "2026-04-28",
+      "mapa": "Border",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 6,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 0,
+          "assistencias": 0,
+          "plants": 1,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": [
+            "+1 (plants)",
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 6,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 0.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)",
+            "-1 (amiguinho)"
+          ]
+        }
+      ],
+      "ts": 1777426294224
+    },
+    {
+      "data": "2026-04-28",
+      "mapa": "Clubhouse",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_Gust",
+          "kills": 2,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 5,
+          "assistencias": 3,
+          "plants": 1,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2.5,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        }
+      ],
+      "ts": 1777428403215
+    },
+    {
+      "data": "2026-04-28",
+      "mapa": "Coastline",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 7,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 7,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 5,
+          "assistencias": 3,
+          "plants": 1,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1777432251185
+    },
+    {
+      "data": "2026-04-29",
+      "mapa": "Clubhouse",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 4,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 7,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 0.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 3,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": false,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1777433312896
+    }
+  ]
+}

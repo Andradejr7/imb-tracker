@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMB Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;--surface:#111418;--surface2:#181c22;
+  --border:rgba(255,170,0,0.18);--gold:#ffaa00;
+  --red:#e8321a;--green:#2ecc71;--blue:#4a90d9;
+  --text:#e8e0d0;--muted:#7a7060;--accent:rgba(255,170,0,0.08);
+}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;}
+.app{max-width:960px;margin:0 auto;padding:16px;}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 18px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.logo-mark{width:34px;height:34px;border:2px solid var(--gold);transform:rotate(45deg);display:flex;align-items:center;justify-content:center;}
+.logo-inner{width:14px;height:14px;background:var(--gold);transform:rotate(-45deg);}
+.header-title{font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+.header-sub{font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;font-family:'Share Tech Mono',monospace;}
+.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.tab{padding:8px 16px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:none;border:none;color:var(--muted);cursor:pointer;position:relative;transition:color 0.2s;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--gold);}
+.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--gold);}
+.panel{display:none;}.panel.active{display:block;}
+.btn{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:9px 20px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;border-radius:2px;transition:all 0.2s;}
+.btn:hover:not(:disabled){background:var(--gold);color:#000;}
+.btn:disabled{opacity:0.35;cursor:not-allowed;}
+.btn-red{border-color:var(--red);color:var(--red);}
+.btn-red:hover:not(:disabled){background:var(--red);color:#fff;}
+.btn-green{border-color:var(--green);color:var(--green);}
+.btn-green:hover:not(:disabled){background:var(--green);color:#000;}
+.btn-blue{border-color:var(--blue);color:var(--blue);}
+.btn-blue:hover:not(:disabled){background:var(--blue);color:#fff;}
+.btn-sm{font-size:10px;padding:5px 12px;}
+.section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-family:'Share Tech Mono',monospace;}
+.divider{height:1px;background:var(--border);margin:14px 0;}
+.ref-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:16px;margin-bottom:14px;}
+.ref-title{font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.ref-sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.7;}
+.jogadores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:14px;}
+.jogador-btn{font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px 10px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:3px;cursor:pointer;transition:all 0.2s;text-align:center;font-weight:600;}
+.jogador-btn:hover{border-color:rgba(255,170,0,0.4);color:var(--text);}
+.jogador-btn.ativo{border-color:var(--gold);background:rgba(255,170,0,0.1);color:var(--gold);}
+.log-box{background:#050709;border:1px solid rgba(74,144,217,0.12);border-radius:3px;padding:8px 10px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--blue);line-height:1.8;margin-bottom:14px;max-height:80px;overflow-y:auto;}
+.log-ok{color:var(--green);}.log-err{color:var(--red);}.log-info{color:var(--gold);}
+.dia-header{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;padding:5px 0;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.dia-tag{background:rgba(255,170,0,0.1);border:1px solid rgba(255,170,0,0.2);color:var(--gold);border-radius:2px;padding:1px 7px;font-size:10px;}
+.partida-row{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:all 0.2s;flex-wrap:wrap;}
+.partida-row:hover{border-color:rgba(255,170,0,0.4);background:var(--accent);}
+.partida-row.selecionada{border-color:var(--gold);background:rgba(255,170,0,0.08);}
+.pr-sel{width:20px;height:20px;border:1px solid var(--border);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.partida-row.selecionada .pr-sel{background:var(--gold);border-color:var(--gold);}
+.pr-chk{color:#000;font-size:11px;font-weight:700;display:none;}
+.partida-row.selecionada .pr-chk{display:block;}
+.pr-mapa{font-weight:700;font-size:14px;letter-spacing:1px;min-width:130px;}
+.pr-hora{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);min-width:55px;}
+.pr-placar{font-family:'Share Tech Mono',monospace;font-size:13px;font-weight:700;min-width:44px;}
+.pr-placar.win{color:var(--green);}.pr-placar.loss{color:var(--red);}
+.pr-squad{display:flex;gap:4px;flex-wrap:wrap;flex:1;}
+.sq-pill{font-size:9px;font-family:'Share Tech Mono',monospace;padding:2px 6px;border-radius:2px;}
+.sq-ref{border:1px solid rgba(255,170,0,0.4);background:rgba(255,170,0,0.1);color:var(--gold);}
+.sq-time{border:1px solid rgba(46,204,113,0.3);background:rgba(46,204,113,0.08);color:var(--green);}
+.ph-box{background:rgba(46,204,113,0.04);border:1px solid rgba(46,204,113,0.22);border-radius:4px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.ph-mapa{font-size:17px;font-weight:700;letter-spacing:2px;color:var(--gold);}
+.ph-badge{font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 9px;border-radius:2px;}
+.win-badge{background:rgba(46,204,113,0.15);color:var(--green);border:1px solid rgba(46,204,113,0.3);}
+.loss-badge{background:rgba(232,50,26,0.15);color:var(--red);border:1px solid rgba(232,50,26,0.3);}
+.edit-table{width:100%;border-collapse:collapse;font-size:13px;}
+.edit-table th{text-align:left;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:5px 7px;border-bottom:1px solid var(--border);font-family:'Share Tech Mono',monospace;font-weight:400;}
+.edit-table td{padding:5px 7px;border-bottom:1px solid rgba(255,170,0,0.04);vertical-align:middle;}
+.edit-table tr:hover td{background:rgba(255,170,0,0.03);}
+.edit-table input[type=number]{width:50px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:12px;padding:3px 5px;border-radius:2px;text-align:center;}
+.edit-table input[type=number]:focus{outline:none;border-color:var(--gold);}
+.edit-table input[type=checkbox]{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;}
+.hl-row td{background:rgba(255,170,0,0.02);}
+.auto-tag{font-size:9px;font-family:'Share Tech Mono',monospace;padding:1px 5px;border-radius:2px;background:rgba(74,144,217,0.15);color:var(--blue);border:1px solid rgba(74,144,217,0.3);margin-left:3px;}
+.manual-tag{font-size:9px;font-family:'Share Tech Mono',monospace;padding:1px 5px;border-radius:2px;background:rgba(255,170,0,0.1);color:var(--gold);border:1px solid rgba(255,170,0,0.25);margin-left:3px;}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:7px;margin-top:12px;}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:8px;text-align:center;}
+.sc-name{font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sc-pts{font-size:22px;font-weight:700;font-family:'Share Tech Mono',monospace;}
+.sc-pts.pos{color:var(--green);}.sc-pts.neg{color:var(--red);}.sc-pts.zero{color:var(--muted);}
+.sc-det{font-size:9px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-top:3px;line-height:1.5;}
+.result-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;padding:5px 9px;border-radius:2px;}
+.result-select:focus{outline:none;border-color:var(--gold);}
+.rank-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:8px;overflow:hidden;}
+.rank-card.first{border-color:rgba(255,170,0,0.6);box-shadow:0 0 12px rgba(255,170,0,0.08);}
+.rank-card.second{border-color:rgba(160,160,160,0.4);}
+.rank-card.third{border-color:rgba(180,100,40,0.4);}
+.rank-card.second{border-color:rgba(180,180,180,0.3);}
+.rank-card.third{border-color:rgba(205,127,50,0.3);}
+.rank-main{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;}
+.rank-main:hover{background:var(--accent);}
+.rank-pos{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);text-align:center;}
+.rank-pos.gold{color:var(--gold);font-size:16px;}
+.rank-name{font-size:14px;font-weight:700;letter-spacing:1px;}
+.rank-stats-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:3px;}
+.rsi{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);}
+.rsi span{color:var(--text);font-weight:600;}
+.rank-pts-big{font-family:'Share Tech Mono',monospace;font-size:24px;font-weight:700;}
+.rank-pts-big.pos{color:var(--green);}.rank-pts-big.neg{color:var(--red);}.rank-pts-big.zero{color:var(--muted);}
+.bar-wrap{width:60px;height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:4px;}
+.bar-fill{height:3px;border-radius:2px;}
+.rank-detail{display:none;padding:10px 12px;border-top:1px solid var(--border);background:rgba(0,0,0,0.15);}
+.rank-detail.open{display:block;}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-bottom:8px;}
+.di{background:var(--surface2);border-radius:2px;padding:7px 9px;}
+.di-l{font-size:9px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-bottom:2px;}
+.di-v{font-size:16px;font-weight:700;font-family:'Share Tech Mono',monospace;}
+.di-v.pos{color:var(--green);}.di-v.neg{color:var(--red);}.di-v.gold{color:var(--gold);}
+.rp{display:inline-block;font-size:10px;font-family:'Share Tech Mono',monospace;padding:2px 7px;border-radius:2px;margin:2px;}
+.rp-pos{background:rgba(46,204,113,0.1);color:#5de89a;border:1px solid rgba(46,204,113,0.2);}
+.rp-neg{background:rgba(232,50,26,0.1);color:#ff7058;border:1px solid rgba(232,50,26,0.2);}
+.match-card{border-radius:4px;padding:11px 13px;margin-bottom:8px;background:var(--surface);}
+.match-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;flex-wrap:wrap;gap:6px;}
+.match-date-lbl{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
+.match-mapa-lbl{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;}
+.pills{display:flex;gap:5px;flex-wrap:wrap;}
+.pill{font-size:10px;font-family:'Share Tech Mono',monospace;padding:2px 8px;border-radius:2px;}
+.pill-pos{background:rgba(46,204,113,0.1);color:#5de89a;border:1px solid rgba(46,204,113,0.2);}
+.pill-neg{background:rgba(232,50,26,0.1);color:#ff7058;border:1px solid rgba(232,50,26,0.2);}
+.pill-zero{background:rgba(255,255,255,0.03);color:var(--muted);border:1px solid rgba(255,255,255,0.07);}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:11px;}
+.destaques-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px;}
+.destaque-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px;position:relative;overflow:hidden;}
+.destaque-card.ouro{border-color:var(--gold);}.destaque-card.verde{border-color:rgba(46,204,113,0.4);}
+.destaque-card.azul{border-color:rgba(74,144,217,0.4);}.destaque-card.vermelho{border-color:rgba(232,50,26,0.35);}
+.destaque-card.roxo{border-color:rgba(150,100,255,0.4);}
+.destaque-titulo{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-bottom:8px;}
+.destaque-nome{font-size:17px;font-weight:700;letter-spacing:1px;margin-bottom:4px;}
+.destaque-card.ouro .destaque-nome{color:var(--gold);}.destaque-card.verde .destaque-nome{color:var(--green);}
+.destaque-card.azul .destaque-nome{color:var(--blue);}.destaque-card.vermelho .destaque-nome{color:var(--red);}
+.destaque-card.roxo .destaque-nome{color:#b48fff;}
+.destaque-valor{font-family:'Share Tech Mono',monospace;font-size:24px;font-weight:700;}
+.destaque-card.ouro .destaque-valor{color:var(--gold);}.destaque-card.verde .destaque-valor{color:var(--green);}
+.destaque-card.azul .destaque-valor{color:var(--blue);}.destaque-card.vermelho .destaque-valor{color:var(--red);}
+.destaque-card.roxo .destaque-valor{color:#b48fff;}
+.destaque-sub{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.decor-num{position:absolute;bottom:-6px;right:8px;font-size:52px;font-weight:700;font-family:'Share Tech Mono',monospace;opacity:0.04;color:white;pointer-events:none;}
+.noite-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:20px;}
+.ns-card{background:var(--surface2);border-radius:3px;padding:10px;text-align:center;}
+.ns-label{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:4px;}
+.ns-val{font-family:'Share Tech Mono',monospace;font-size:20px;font-weight:700;color:var(--gold);}
+.ns-val.green{color:var(--green);}.ns-val.red{color:var(--red);}
+.resumo-table{width:100%;border-collapse:collapse;margin-top:8px;}
+.resumo-table th{text-align:left;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);font-family:'Share Tech Mono',monospace;font-weight:400;}
+.resumo-table td{padding:7px 8px;border-bottom:1px solid rgba(255,170,0,0.04);font-size:13px;}
+.resumo-table tr:hover td{background:rgba(255,170,0,0.03);}
+.resumo-table .pos{color:var(--green);font-family:'Share Tech Mono',monospace;font-weight:700;}
+.resumo-table .neg{color:var(--red);font-family:'Share Tech Mono',monospace;font-weight:700;}
+.resumo-table .gold{color:var(--gold);font-family:'Share Tech Mono',monospace;font-weight:700;}
+.resumo-table .nome-cell{font-weight:700;letter-spacing:1px;}
+.modal-wrap{display:none;min-height:180px;background:rgba(0,0,0,0.7);border-radius:4px;align-items:center;justify-content:center;padding:20px;margin-top:10px;}
+.modal-wrap.show{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:22px;max-width:320px;width:100%;}
+.modal-title{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.modal-body{font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;line-height:1.6;margin-bottom:16px;}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,170,0,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:6px;vertical-align:middle;}
+.cors-tip{background:rgba(74,144,217,0.08);border:1px solid rgba(74,144,217,0.25);border-radius:4px;padding:12px 14px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--blue);line-height:1.8;margin-bottom:14px;}
+.cors-tip strong{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="logo-mark"><div class="logo-inner"></div></div>
+      <div>
+        <div class="header-title">IMB Tracker</div>
+        <div class="header-sub">Rainbow Six Siege · Análise do Time</div>
+      </div>
+    </div>
+    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);text-align:right;" id="header-date"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="trocarAba('sessao',this)">Sessão</button>
+    <button class="tab" onclick="trocarAba('classificacao',this)">Classificação</button>
+    <button class="tab" onclick="trocarAba('ranking',this)">Ranking</button>
+    <button class="tab" onclick="trocarAba('historico',this)">Histórico</button>
+    <button class="tab" onclick="trocarAba('resumo',this)">Resumo da Noite</button>
+  </div>
+
+  <!-- SESSÃO -->
+  <div class="panel active" id="panel-sessao">
+    <div class="cors-tip">
+      <strong>⚡ Como usar:</strong> Abra o <strong>r6.tracker.network</strong> no mesmo navegador e faça login. Depois volte aqui, selecione o jogador de referência e clique em <strong>Buscar Partidas</strong>. O site vai puxar as partidas reais automaticamente.
+    </div>
+    <div class="ref-box">
+      <div class="ref-title">Jogador de referência</div>
+      <div class="ref-sub">Selecione 1 jogador — o sistema busca as partidas dele e detecta quem estava no squad.</div>
+      <div class="jogadores-grid" id="jogadores-grid"></div>
+      <button class="btn btn-green" id="btn-buscar" onclick="buscarPartidas()" disabled>Buscar Partidas</button>
+    </div>
+    <div class="log-box" id="log-box"><span class="log-info">> Selecione 1 jogador para começar.</span></div>
+    <div id="lista-wrap" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+        <div class="section-label" style="margin-bottom:0;">Selecione a partida</div>
+        <button class="btn btn-sm" onclick="buscarPartidas()">Atualizar</button>
+      </div>
+      <div id="lista-partidas"></div>
+      <div id="load-more-wrap" style="display:none;text-align:center;margin-top:12px;">
+        <button class="btn btn-sm" onclick="carregarMais()">Carregar Mais</button>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);margin-top:6px;" id="load-more-info"></div>
+      </div>
+    </div>
+    <div id="form-wrap" style="display:none;margin-top:14px;">
+      <div class="divider"></div>
+      <div class="ph-box" id="partida-header"></div>
+      <div class="section-label">Verifique e complete os dados</div>
+      <table class="edit-table">
+        <thead>
+          <tr>
+            <th>Jogador</th>
+            <th>Kills<span class="auto-tag">auto</span></th>
+            <th>Assists<span class="auto-tag">auto</span></th>
+            <th>Plants<span class="manual-tag">manual</span></th>
+            <th>Clutch<span class="auto-tag">auto</span></th>
+            <th>Ace<span class="auto-tag">auto</span></th>
+            <th>TK<span class="auto-tag">auto</span></th>
+          </tr>
+        </thead>
+        <tbody id="edit-tbody"></tbody>
+      </table>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px;">
+        <div>
+          <div class="section-label" style="margin-bottom:5px;">Resultado</div>
+          <select class="result-select" id="match-result" onchange="atualizarPrevia()">
+            <option value="win">Vitória</option>
+            <option value="loss">Derrota</option>
+          </select>
+        </div>
+        <div>
+          <div class="section-label" style="margin-bottom:5px;">Data</div>
+          <input type="date" id="match-date" class="result-select" onchange="atualizarPrevia()"/>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-label">Pré-visualização dos pontos</div>
+      <div class="score-grid" id="score-grid"></div>
+      <div style="margin-top:16px;display:flex;gap:10px;">
+        <button class="btn btn-green" onclick="registrarPartida()">Registrar Partida</button>
+        <button class="btn btn-sm btn-red" onclick="cancelarForm()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASSIFICAÇÃO GERAL -->
+  <div class="panel" id="panel-classificacao">
+    <div id="class-content"></div>
+  </div>
+
+  <!-- RANKING -->
+  <div class="panel" id="panel-ranking">
+    <div id="podium-wrap" style="display:none;margin-bottom:20px;"></div>
+    <div class="section-label" style="margin-bottom:12px;">Clique em um jogador para ver detalhes</div>
+    <div id="ranking-content"></div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="panel" id="panel-historico">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
+      <button class="btn btn-sm btn-red" onclick="abrirModal('tudo')">Apagar tudo</button>
+    </div>
+    <div id="history-content"></div>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="panel" id="panel-resumo">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+      <div class="section-label" style="margin-bottom:0;">Escolha a data</div>
+      <input type="date" id="resumo-date" class="result-select" onchange="gerarResumo()"/>
+      <button class="btn btn-sm btn-blue" onclick="gerarResumo()">Gerar Resumo</button>
+    </div>
+    <div id="resumo-content"><div class="empty-state">// Selecione uma data para ver o resumo da noite</div></div>
+  </div>
+</div>
+
+<div class="modal-wrap" id="modal-wrap">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title">Confirmar</div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-btns">
+      <button class="btn btn-sm" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-sm btn-red" id="modal-btn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const TODOS_JOGADORES = ['IMB_And-','IMB_Gust','IMB_VnC','IMB_Shell','IMB_Bimba','IMB_Gabkill','IMB_Bentoo','IMB_Dvk-'];
+let jogadorRef = null, partidaSelecionada = null, jogadoresPartida = [];
+let partidasVisiveis = 15;
+let modalAcao = null, modalParam = null;
+let partidasCache = [];
+
+const hoje = new Date();
+document.getElementById('header-date').innerHTML = hoje.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}).toUpperCase()+'<br>IMB TRACKER';
+document.getElementById('match-date').value = hoje.toISOString().split('T')[0];
+document.getElementById('resumo-date').value = hoje.toISOString().split('T')[0];
+
+async function getEstado(){
+  try {
+    const r = await fetch('/api/data');
+    if(r.ok) return await r.json();
+  } catch(e) {}
+  return {partidas:[]};
+}
+async function salvarEstado(s){
+  try {
+    await fetch('/api/data', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(s)
+    });
+  } catch(e) { console.error('Erro ao salvar:', e); }
+}
+
+function renderJogadoresGrid(){
+  document.getElementById('jogadores-grid').innerHTML=TODOS_JOGADORES.map(j=>
+    `<div class="jogador-btn ${jogadorRef===j?'ativo':''}" onclick="selecionarRef('${j}')">${j}</div>`
+  ).join('');
+  document.getElementById('btn-buscar').disabled=!jogadorRef;
+}
+
+function selecionarRef(nome){
+  jogadorRef=jogadorRef===nome?null:nome;
+  renderJogadoresGrid();
+  document.getElementById('lista-wrap').style.display='none';
+  cancelarForm();
+  if(jogadorRef) log(`Referência: ${jogadorRef}`,'ok');
+}
+
+// ============ FETCH REAL DO TRACKER.GG ============
+async function buscarPartidas(){
+  if(!jogadorRef) return;
+  const btn=document.getElementById('btn-buscar');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Buscando...';
+  log(`Buscando partidas de ${jogadorRef}...`,'info');
+
+  try {
+    const url = `https://api.tracker.gg/api/v2/r6siege/standard/matches/psn/${encodeURIComponent(jogadorRef)}?gamemode=pvp_ranked`;
+    const resp = await fetch(url, {
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Referer': 'https://r6.tracker.network/',
+      }
+    });
+
+    if(!resp.ok) throw new Error(`HTTP ${resp.status} — Abra o tracker.gg primeiro e faça login`);
+    const data = await resp.json();
+    const matches = data?.data?.matches || data?.data || [];
+
+    if(!matches.length) { log('Nenhuma partida encontrada.','err'); return; }
+
+    log(`${matches.length} partidas carregadas!`,'ok');
+    partidasCache = matches;
+    partidasVisiveis = 15;
+    renderizarListaReal(matches.slice(0, partidasVisiveis));
+    // Sem limite - todas as partidas ficam no cache
+  } catch(e) {
+    log(`Erro: ${e.message}`,'err');
+    log('Dica: abra r6.tracker.network no navegador, faça login, depois volte aqui.','info');
+  } finally {
+    btn.disabled=false; btn.textContent='Buscar Partidas';
+  }
+}
+
+function formatarTempo(dateStr){
+  if(!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const min = Math.floor(diff/60000);
+  if(min<60) return `${min}m ago`;
+  const h = Math.floor(min/60);
+  if(h<24) return `${h}h ago`;
+  return `${Math.floor(h/24)}d ago`;
+}
+
+function formatarData(dateStr){
+  if(!dateStr) return '';
+  const d = new Date(dateStr);
+  const hoje = new Date();
+  const ontem = new Date(hoje); ontem.setDate(ontem.getDate()-1);
+  if(d.toDateString()===hoje.toDateString()) return 'Hoje';
+  if(d.toDateString()===ontem.toDateString()) return 'Ontem';
+  return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+}
+
+function renderizarListaReal(matches){
+  const porDia = {};
+  matches.forEach((m,idx) => {
+    const dia = formatarData(m.metadata?.timestamp || m.attributes?.startedAt);
+    if(!porDia[dia]) porDia[dia]=[];
+    porDia[dia].push({m, idx});
+  });
+
+  let html='';
+  for(const [dia, lista] of Object.entries(porDia)){
+    html+=`<div style="margin-bottom:16px;"><div class="dia-header"><span class="dia-tag">${dia}</span><span>${lista.length} partida${lista.length>1?'s':''}</span></div>`;
+    lista.forEach(({m, idx}) => {
+      const meta = m.metadata || {};
+      const seg = m.segments?.find(s=>s.type==='overview') || m.segments?.[0] || {};
+      const stats = seg.stats || {};
+      const mapa = meta.sessionMapName || meta.mapName || meta.map || '—';
+      const tempo = formatarTempo(meta.timestamp || m.attributes?.startedAt);
+      const rWon = stats.roundsWon?.value || 0;
+      const rLost = stats.roundsLost?.value || 0;
+      const won = rWon > rLost ? true : (rWon < rLost ? false : (stats.hasWon?.value ?? false));
+      const rW = rWon;
+      const rL = rLost;
+      const placar = `${rW}:${rL}`;
+      const pc = won?'win':'loss';
+
+      // Stats do jogador ref para mostrar na linha
+      const k = stats.kills?.value || 0;
+      const a = stats.assists?.value || 0;
+      const d2 = stats.deaths?.value || 0;
+      const pills = `<span class="sq-pill sq-ref">${jogadorRef}</span><span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-left:6px;">${k}K / ${d2}D / ${a}A</span>`;
+
+      html+=`<div class="partida-row" id="pr_${idx}" onclick="selecionarPartidaReal(${idx})">
+        <div class="pr-sel"><span class="pr-chk">✓</span></div>
+        <div class="pr-mapa">${mapa}</div>
+        <div class="pr-hora">${tempo}</div>
+        <div class="pr-placar ${pc}">${placar}</div>
+        <div class="pr-squad">${pills}</div>
+      </div>`;
+    });
+    html+='</div>';
+  }
+
+  document.getElementById('lista-partidas').innerHTML=html;
+  document.getElementById('lista-wrap').style.display='block';
+
+  // Mostrar botão Carregar Mais se tiver mais no cache
+  const loadWrap = document.getElementById('load-more-wrap');
+  const loadInfo = document.getElementById('load-more-info');
+  if(partidasCache.length > matches.length) {
+    loadWrap.style.display = 'block';
+    loadInfo.textContent = `Mostrando ${matches.length} de ${partidasCache.length} partidas`;
+  } else {
+    loadWrap.style.display = 'none';
+    loadInfo.textContent = '';
+  }
+}
+
+function selecionarPartidaReal(idx){
+  document.querySelectorAll('.partida-row').forEach(r=>r.classList.remove('selecionada'));
+  document.getElementById('pr_'+idx)?.classList.add('selecionada');
+
+  const m = partidasCache[idx];
+  if(!m) return;
+
+  const meta = m.metadata || {};
+  const mapa = meta.sessionMapName || meta.mapName || meta.map || '—';
+  const timestamp = meta.timestamp || m.attributes?.startedAt || '';
+  // Usar timezone de Brasilia (UTC-3) para calcular a data correta
+  const dataPartida = timestamp ? 
+    new Date(new Date(timestamp).getTime() - 3*60*60*1000).toISOString().split('T')[0] : 
+    hoje.toISOString().split('T')[0];
+
+  // A API retorna 1 segment com todos os dados do jogador de referência
+  // segments[0] = overview com stats gerais
+  // Buscar o segment correto - pode ser 'overview' ou o único disponível
+  const allSegs = m.segments || [];
+  
+  // Pegar todos os segments que têm platformUserHandle (são jogadores)
+  // Na API do tracker.gg, cada match retorna os dados do próprio jogador
+  const refSeg = allSegs.find(s => {
+    const n = s.metadata?.platformUserHandle || s.metadata?.platformUserIdentifier || '';
+    return n.toLowerCase() === jogadorRef.toLowerCase();
+  }) || allSegs[0];
+
+  const stats0 = refSeg?.stats || {};
+  const rW = stats0.roundsWon?.value || 0;
+  const rL = stats0.roundsLost?.value || 0;
+  const won = rW > rL ? true : rW < rL ? false : (stats0.hasWon?.value ?? false);
+
+  jogadoresPartida = [];
+
+  // Tentar pegar todos os jogadores do squad dos segments
+  // Alguns endpoints retornam múltiplos players
+  allSegs.forEach(s => {
+    const nome = s.metadata?.platformUserHandle || s.metadata?.platformUserIdentifier || '';
+    if(!nome) return;
+    if(!TODOS_JOGADORES.some(j => j.toLowerCase() === nome.toLowerCase())) return;
+    const st = s.stats || {};
+    // ace: kills5K ou campo aces
+    const aceVal = (st.kills5K?.value || 0) > 0 || (st.aces?.value || 0) > 0;
+    // clutch: campo clutches
+    const clutchVal = (st.clutches?.value || 0) > 0;
+    // teamkill: campo teamKills (K maiúsculo)
+    const tkVal = st.teamKills?.value || 0;
+    jogadoresPartida.push({
+      nome,
+      kills: st.kills?.value || 0,
+      deaths: st.deaths?.value || 0,
+      assistencias: st.assists?.value || st.assistances?.value || 0,
+      plants: 0,
+      clutch: clutchVal,
+      ace: aceVal,
+      teamkills: tkVal,
+    });
+  });
+
+  if(jogadoresPartida.length === 0) {
+    const st = stats0;
+    const aceVal = (st.kills5K?.value || 0) > 0 || (st.aces?.value || 0) > 0;
+    const clutchVal = (st.clutches?.value || 0) > 0;
+    const tkVal = st.teamKills?.value || 0;
+    jogadoresPartida.push({
+      nome: jogadorRef,
+      kills: st.kills?.value || 0,
+      assistencias: st.assists?.value || 0,
+      plants: 0,
+      clutch: clutchVal,
+      ace: aceVal,
+      teamkills: tkVal,
+    });
+  }
+
+  partidaSelecionada = { mapa, won, rW, rL, idx, data: dataPartida };
+  document.getElementById('match-result').value = won?'win':'loss';
+  document.getElementById('match-date').value = dataPartida;
+
+  document.getElementById('partida-header').innerHTML=`
+    <div class="ph-mapa">${mapa.toUpperCase()}</div>
+    <span class="ph-badge ${won?'win-badge':'loss-badge'}">${won?'VITÓRIA':'DERROTA'}</span>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:14px;font-weight:700;">${rW}:${rL}</span>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);"><span class="spinner"></span>Buscando squad...</span>
+  `;
+
+  renderizarTabela();
+  atualizarPrevia();
+  document.getElementById('form-wrap').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('form-wrap').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 100);
+
+  // Buscar outros jogadores do squad em background
+  buscarSquadDaPartida(m, idx, dataPartida, mapa, won, rW, rL);
+}
+
+// Busca os outros jogadores do IMB que estavam na mesma partida
+async function buscarSquadDaPartida(matchRef, matchIdx, dataPartida, mapa, won, rW, rL) {
+  const matchTimestamp = matchRef.metadata?.timestamp || '';
+  if(!matchTimestamp) return;
+
+  const matchTime = new Date(matchTimestamp).getTime();
+  const MARGEM = 5 * 60 * 1000; // 5 minutos de margem
+  const squadEncontrado = [...jogadoresPartida]; // começa com o ref
+
+  const outrosJogadores = TODOS_JOGADORES.filter(j => j.toLowerCase() !== jogadorRef.toLowerCase());
+
+  for(const jogador of outrosJogadores) {
+    try {
+      await new Promise(r => setTimeout(r, 600)); // delay para não ser bloqueado
+      const url = `https://api.tracker.gg/api/v2/r6siege/standard/matches/psn/${encodeURIComponent(jogador)}?gamemode=pvp_ranked`;
+      const resp = await fetch(url, { credentials: 'include', headers: { 'Accept': 'application/json' } });
+      if(!resp.ok) continue;
+      const data = await resp.json();
+      const matches = data?.data?.matches || data?.data || [];
+
+      // Procura partida no mesmo horário (±5 min)
+      const partida = matches.find(m => {
+        const t = new Date(m.metadata?.timestamp || '').getTime();
+        return Math.abs(t - matchTime) < MARGEM;
+      });
+
+      if(!partida) continue;
+
+      // Já temos esse jogador?
+      if(squadEncontrado.some(j => j.nome.toLowerCase() === jogador.toLowerCase())) continue;
+
+      const seg = partida.segments?.[0] || {};
+      const st = seg.stats || {};
+      const clutchVal = (st.clutches?.value||0)>0 || (st.clutchesWon?.value||0)>0;
+
+      const aceVal2 = (st.kills5K?.value || 0) > 0 || (st.aces?.value || 0) > 0;
+      const tkVal2 = st.teamKills?.value || 0;
+      squadEncontrado.push({
+        nome: jogador,
+        kills: st.kills?.value || 0,
+        deaths: st.deaths?.value || 0,
+        assistencias: st.assists?.value || 0,
+        plants: 0,
+        clutch: clutchVal,
+        ace: aceVal2,
+        teamkills: tkVal2,
+      });
+
+      log(`Squad: ${jogador} encontrado na partida!`, 'ok');
+    } catch(e) {
+      // silencioso
+    }
+  }
+
+  // Atualizar jogadoresPartida com squad completo
+  if(squadEncontrado.length > jogadoresPartida.length) {
+    jogadoresPartida = squadEncontrado;
+    renderizarTabela();
+    atualizarPrevia();
+  }
+
+  // Atualizar header
+  document.getElementById('partida-header').innerHTML=`
+    <div class="ph-mapa">${mapa.toUpperCase()}</div>
+    <span class="ph-badge ${won?'win-badge':'loss-badge'}">${won?'VITÓRIA':'DERROTA'}</span>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:14px;font-weight:700;">${rW}:${rL}</span>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);">${jogadoresPartida.length} do time detectado(s)</span>
+  `;
+}
+
+function renderizarTabela(){
+  const tbody=document.getElementById('edit-tbody'); tbody.innerHTML='';
+  jogadoresPartida.forEach((j,i)=>{
+    const tr=document.createElement('tr');
+    if(i%2===0) tr.className='hl-row';
+    tr.innerHTML=`
+      <td style="font-weight:700;font-size:12px;letter-spacing:1px;">${j.nome}</td>
+      <td><input type="number" min="0" max="99" value="${j.kills}" id="k_${i}" onchange="updJ(${i},'kills',this.value)"/></td>
+      <td><input type="number" min="0" max="99" value="${j.assistencias}" id="a_${i}" onchange="updJ(${i},'assistencias',this.value)"/></td>
+      <td><input type="number" min="0" max="20" value="${j.plants||0}" id="pl_${i}" onchange="updJ(${i},'plants',this.value)"/></td>
+      <td style="text-align:center"><input type="checkbox" id="cl_${i}" ${j.clutch?'checked':''} onchange="updJ(${i},'clutch',this.checked)"/></td>
+      <td style="text-align:center"><input type="checkbox" id="ac_${i}" ${j.ace?'checked':''} onchange="updJ(${i},'ace',this.checked)"/></td>
+      <td><input type="number" min="0" max="5" value="${j.teamkills||0}" id="tk_${i}" onchange="updJ(${i},'teamkills',this.value)" title="Teamkills (matar o amiguinho)"/></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function updJ(i,campo,val){
+  jogadoresPartida[i][campo]=['kills','assistencias','plants'].includes(campo)?parseInt(val)||0:val;
+  atualizarPrevia();
+}
+
+function calcPontos(j, todos, data, estadoAtual){
+  const estado=estadoAtual||{partidas:[]}; let pts=0; const det=[];
+  const maxK=Math.max(...todos.map(x=>x.kills));
+  const maxA=Math.max(...todos.map(x=>x.assistencias||0));
+
+  // Ace +5
+  if(j.ace){pts+=5;det.push('+5 (ace)');}
+
+  // Clutch +2
+  if(j.clutch){pts+=2;det.push('+2 (clutch)');}
+
+  // Mais kills do time +1
+  if(j.kills===maxK&&maxK>0){pts+=1;det.push('+1 (mais kills)');}
+
+  // Mais de 10 kills +1
+  if(j.kills>=10){pts+=1;det.push('+1 (10+ kills)');}
+
+  // Plant +1 por cada plant
+  if((j.plants||0)>0){pts+=(j.plants);det.push(`+${j.plants} (plants)`);}
+
+  // Mais assists +0.5
+  if((j.assistencias||0)===maxA&&maxA>0){pts+=0.5;det.push('+0.5 (mais assists)');}
+
+  // Zerado -1
+  if(j.kills===0){pts-=1;det.push('-1 (zerado)');}
+
+  // Matar o amiguinho -1 por teamkill
+  if((j.teamkills||0)>0){pts-=(j.teamkills);det.push(`-${j.teamkills} (amiguinho)`);}
+
+  return{pts,det};
+}
+
+async function atualizarPrevia(){
+  if(!jogadoresPartida.length) return;
+  const data=document.getElementById('match-date').value;
+  const estadoAtual=await getEstado();
+  const grid=document.getElementById('score-grid'); grid.innerHTML='';
+  jogadoresPartida.forEach(j=>{
+    const{pts,det}=calcPontos(j,jogadoresPartida,data,estadoAtual);
+    const cls=pts>0?'pos':pts<0?'neg':'zero';
+    const div=document.createElement('div'); div.className='sc';
+    div.innerHTML=`<div class="sc-name">${j.nome}</div><div class="sc-pts ${cls}">${pts>0?'+':''}${pts}</div><div class="sc-det">${det.join('<br>')||'— sem pontos'}</div>`;
+    grid.appendChild(div);
+  });
+}
+
+async function registrarPartida(){
+  if(!jogadoresPartida.length) return;
+  const vitoria=document.getElementById('match-result').value==='win';
+  const data=document.getElementById('match-date').value;
+  const mapa=partidaSelecionada?.mapa||'';
+  const estado=await getEstado(); if(!estado.partidas) estado.partidas=[];
+  const pontuacoes=jogadoresPartida.map(j=>{
+    const{pts,det}=calcPontos(j,jogadoresPartida,data);
+    return{nome:j.nome,kills:j.kills,deaths:j.deaths||j.mortes||0,assistencias:j.assistencias||0,plants:j.plants||0,clutch:!!j.clutch,ace:!!j.ace,teamkills:j.teamkills||0,pts,det};
+  });
+  estado.partidas.push({data,mapa,resultado:vitoria?'vitoria':'derrota',pontuacoes,ts:Date.now()});
+  await salvarEstado(estado);
+  log(`✓ Partida de ${mapa} registrada!`,'ok');
+  cancelarForm();
+  // Ir para o ranking automaticamente
+  setTimeout(() => {
+    trocarAba('classificacao', document.querySelectorAll('.tab')[1]);
+    window.scrollTo({top:0, behavior:'smooth'});
+  }, 300);
+}
+
+function cancelarForm(){
+  jogadoresPartida=[]; partidaSelecionada=null;
+  document.getElementById('form-wrap').style.display='none';
+  document.querySelectorAll('.partida-row').forEach(r=>r.classList.remove('selecionada'));
+}
+
+async function gerarResumo(){
+  const data=document.getElementById('resumo-date').value; if(!data) return;
+  const estado=await getEstado();
+  const partidasDodia=(estado.partidas||[]).filter(p=>p.data===data);
+  const container=document.getElementById('resumo-content');
+  if(!partidasDodia.length){container.innerHTML=`<div class="empty-state">// Nenhuma partida em ${new Date(data+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'})}</div>`;return;}
+  const stats={};
+  partidasDodia.forEach(p=>{p.pontuacoes.forEach(s=>{
+    if(!stats[s.nome])stats[s.nome]={nome:s.nome,kills:0,deaths:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,pts:0,partidas:0,vitorias:0};
+    const t=stats[s.nome];t.kills+=s.kills||0;t.assistencias+=s.assistencias||0;t.plants+=s.plants||0;t.clutches+=s.clutch?1:0;t.aces+=s.ace?1:0;t.zeros+=s.kills===0?1:0;t.pts+=s.pts;t.partidas++;t.vitorias+=p.resultado==='vitoria'?1:0;
+  });});
+  const jogadores=Object.values(stats);
+  const vitorias=partidasDodia.filter(p=>p.resultado==='vitoria').length;
+  const totalKills=jogadores.reduce((a,j)=>a+j.kills,0);
+  const totalDeaths=jogadores.reduce((a,j)=>a+(j.deaths||j.mortes||0),0);
+  const temMortes = totalDeaths > 0;
+  const melhor=[...jogadores].sort((a,b)=>b.pts-a.pts)[0];
+  const maisKills=[...jogadores].sort((a,b)=>b.kills-a.kills)[0];
+  const maisAssists=[...jogadores].sort((a,b)=>b.assistencias-a.assistencias)[0];
+  const maisPlants=[...jogadores].sort((a,b)=>b.plants-a.plants)[0];
+  const maisDecisivo=[...jogadores].sort((a,b)=>(b.clutches+b.aces)-(a.clutches+a.aces))[0];
+
+  const ds=new Date(data+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});
+  container.innerHTML=`
+    <div style="margin-bottom:20px;"><div style="font-size:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Resumo — ${ds}</div><div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">${partidasDodia.length} partidas</div></div>
+    <div class="noite-stats">
+      <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${partidasDodia.length}</div></div>
+      <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${vitorias}</div></div>
+      <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${partidasDodia.length-vitorias}</div></div>
+      <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${vitorias/partidasDodia.length>=0.5?'green':'red'}">${Math.round(vitorias/partidasDodia.length*100)}%</div></div>
+      <div class="ns-card"><div class="ns-label">Total Kills</div><div class="ns-val">${totalKills}</div></div>
+      <div class="ns-card"><div class="ns-label">Total Mortes</div><div class="ns-val red">${temMortes ? totalDeaths : 'N/A'}</div></div>
+    </div>
+    <div class="section-label">Destaques da noite</div>
+    <div class="destaques-grid">
+      <div class="destaque-card ouro"><div class="destaque-titulo">Melhor da Noite</div><div class="destaque-nome">${melhor?.nome||'—'}</div><div class="destaque-valor">${melhor?.pts>0?'+':''}${melhor?.pts||0}</div><div class="destaque-sub">pontos no dia</div><div class="decor-num">★</div></div>
+      <div class="destaque-card verde"><div class="destaque-titulo">Mais Kills</div><div class="destaque-nome">${maisKills?.nome||'—'}</div><div class="destaque-valor">${maisKills?.kills||0}</div><div class="destaque-sub">eliminações no dia</div><div class="decor-num">K</div></div>
+      <div class="destaque-card azul"><div class="destaque-titulo">Mais Assistências</div><div class="destaque-nome">${maisAssists?.nome||'—'}</div><div class="destaque-valor">${maisAssists?.assistencias||0}</div><div class="destaque-sub">assists no dia</div><div class="decor-num">A</div></div>
+      <div class="destaque-card roxo"><div class="destaque-titulo">Mais Decisivo</div><div class="destaque-nome">${maisDecisivo?.nome||'—'}</div><div class="destaque-valor">${(maisDecisivo?.clutches||0)+(maisDecisivo?.aces||0)}</div><div class="destaque-sub">${maisDecisivo?.clutches||0} clutch · ${maisDecisivo?.aces||0} ace</div><div class="decor-num">!</div></div>
+      <div class="destaque-card verde"><div class="destaque-titulo">Mais Plants</div><div class="destaque-nome">${maisPlants?.nome||'—'}</div><div class="destaque-valor">${maisPlants?.plants||0}</div><div class="destaque-sub">bombs plantadas</div><div class="decor-num">B</div></div>
+
+    </div>
+    <div class="section-label">Placar detalhado</div>
+    <table class="resumo-table">
+      <thead><tr><th>#</th><th>Jogador</th><th>Pts</th><th>Kills</th><th>Assists</th><th>Plants</th><th>Clutch</th><th>Ace</th><th>Zerado</th><th>V/D</th></tr></thead>
+      <tbody>${[...jogadores].sort((a,b)=>b.pts-a.pts).map((j,i)=>`
+        <tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">${i===0?'◆':i+1}</td>
+        <td class="nome-cell">${j.nome}</td>
+        <td class="${j.pts>0?'pos':j.pts<0?'neg':'gold'}">${j.pts>0?'+':''}${j.pts}</td>
+        <td class="gold">${j.kills}</td><td>${j.assistencias}</td><td>${j.plants}</td>
+        <td style="color:${j.clutches>0?'var(--blue)':'var(--muted)'};">${j.clutches}</td>
+        <td style="color:${j.aces>0?'var(--gold)':'var(--muted)'};">${j.aces}</td>
+        <td style="color:${j.zeros>0?'var(--red)':'var(--muted)'};">${j.zeros}x</td>
+        <td><span style="color:var(--green)">${j.vitorias}V</span>/<span style="color:var(--red)">${j.partidas-j.vitorias}D</span></td></tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+async function renderizarRanking(){
+  const estado=await getEstado();
+  const partidas=estado.partidas||[];
+  const totais={};
+
+  partidas.forEach(p=>{
+    p.pontuacoes.forEach(s=>{
+      if(!totais[s.nome]) totais[s.nome]={pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,partidas:0,razoes:[],ptsHistorico:[]};
+      const t=totais[s.nome];
+      t.pts+=s.pts; t.kills+=(s.kills||0); t.assistencias+=(s.assistencias||0);
+      t.plants+=(s.plants||0); t.clutches+=s.clutch?1:0; t.aces+=s.ace?1:0;
+      t.zeros+=(s.kills===0)?1:0; t.vitorias+=(p.resultado==='vitoria')?1:0;
+      t.partidas++; if(s.det?.length) t.razoes.push(...s.det);
+      t.ptsHistorico.push(s.pts);
+    });
+  });
+
+  const ord=Object.entries(totais).sort((a,b)=>b[1].pts-a[1].pts);
+  const maxPts=Math.max(...ord.map(e=>Math.abs(e[1].pts)),1);
+  const container=document.getElementById('ranking-content');
+
+  if(!partidas.length){
+    container.innerHTML='<div class="empty-state">// Nenhuma partida registrada ainda<br><br>Registre uma partida na aba Sessão para ver o ranking.</div>';
+    return;
+  }
+
+  // Header com total de partidas
+  let html = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
+    <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${partidas.length}</div></div>
+    <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${partidas.filter(p=>p.resultado==='vitoria').length}</div></div>
+    <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${partidas.filter(p=>p.resultado==='derrota').length}</div></div>
+    <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${partidas.filter(p=>p.resultado==='vitoria').length/partidas.length>=0.5?'green':'red'}">${Math.round(partidas.filter(p=>p.resultado==='vitoria').length/partidas.length*100)}%</div></div>
+  </div>`;
+
+  // Pódio top 3
+  if(ord.length >= 3) {
+    const podiumColors = ['var(--gold)','#aaaaaa','#cd7f32'];
+    const podiumBg = ['rgba(255,170,0,0.08)','rgba(160,160,160,0.05)','rgba(180,100,40,0.05)'];
+    const podiumNums = ['1°','2°','3°'];
+    const podiumEl = document.getElementById('podium-wrap');
+    podiumEl.style.display = 'grid';
+    podiumEl.style.gridTemplateColumns = 'repeat(3,1fr)';
+    podiumEl.style.gap = '8px';
+    podiumEl.innerHTML = [1,0,2].map(i => {
+      const [nome,s] = ord[i];
+      const cls = s.pts>0?'pos':s.pts<0?'neg':'zero';
+      const h = i===0?'90px':i===1?'70px':'60px';
+      return `<div style="background:${podiumBg[i]};border:1px solid ${podiumColors[i]}33;border-radius:4px;padding:12px;text-align:center;order:${i===0?1:i===1?0:2};">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:${podiumColors[i]};margin-bottom:4px;">${podiumNums[i]}</div>
+        <div style="font-size:14px;font-weight:700;letter-spacing:1px;margin-bottom:6px;color:${podiumColors[i]};">${nome}</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;font-weight:700;color:${s.pts>0?'var(--green)':s.pts<0?'var(--red)':'var(--muted)'};">${s.pts>0?'+':''}${s.pts}</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px;">${s.partidas} partidas · ${Math.round(s.vitorias/s.partidas*100)}% WR</div>
+        <div style="height:${h};border-left:2px solid ${podiumColors[i]}44;margin:8px auto 0;width:1px;"></div>
+      </div>`;
+    }).join('');
+  }
+
+  html += ord.map(([nome,s],i)=>{
+    const cls=s.pts>0?'pos':s.pts<0?'neg':'zero';
+    const bW=Math.round((Math.abs(s.pts)/maxPts)*100);
+    const cb=s.pts>=0?'var(--gold)':'var(--red)';
+    const mk=s.partidas>0?(s.kills/s.partidas).toFixed(1):0;
+    const wr=s.partidas>0?Math.round(s.vitorias/s.partidas*100):0;
+    const cnt={};s.razoes.forEach(r=>{cnt[r]=(cnt[r]||0)+1;});
+    const rps=Object.entries(cnt).map(([r,c])=>`<span class="rp ${r.startsWith('-')?'rp-neg':'rp-pos'}">${r}${c>1?' ×'+c:''}</span>`).join('');
+
+    // Trend: últimas 5 partidas
+    const ultimas5 = s.ptsHistorico.slice(-5);
+    const trend = ultimas5.map(p=>`<span style="display:inline-block;width:18px;height:18px;border-radius:3px;font-size:9px;line-height:18px;text-align:center;font-family:'Share Tech Mono',monospace;background:${p>0?'rgba(46,204,113,0.15)':p<0?'rgba(232,50,26,0.15)':'rgba(255,255,255,0.05)'};color:${p>0?'var(--green)':p<0?'var(--red)':'var(--muted)'};">${p>0?'+'+p:p}</span>`).join('');
+
+    // Medalhas
+    const medals = [];
+    if(i===0) medals.push('<span style="color:var(--gold);font-size:13px;" title="Líder">★</span>');
+    if(s.aces>0) medals.push(`<span style="font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(255,170,0,0.1);color:var(--gold);border:1px solid rgba(255,170,0,0.25);" title="Ace">${s.aces} ACE</span>`);
+    if(s.clutches>0) medals.push(`<span style="font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(74,144,217,0.1);color:var(--blue);border:1px solid rgba(74,144,217,0.25);" title="Clutch">${s.clutches} CLUTCH</span>`);
+    if(s.zeros>3) medals.push('<span style="font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(232,50,26,0.1);color:var(--red);border:1px solid rgba(232,50,26,0.25);">💀 INTED</span>');
+
+    const podium = ['◆','②','③'];
+
+    return `<div class="rank-card ${i===0?'first':i===1?'second':i===2?'third':''}">
+      <div class="rank-main" onclick="document.getElementById('rd_${i}').classList.toggle('open')">
+        <div class="rank-pos ${i<3?'gold':''}" style="${i===0?'font-size:20px;color:var(--gold)':i===1?'color:#aaa':i===2?'color:#cd7f32':''}">${i<3?podium[i]:i+1}</div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <div class="rank-name">${nome}</div>
+            <div style="display:flex;gap:4px;">${medals.join('')}</div>
+          </div>
+          <div class="rank-stats-row">
+            <div class="rsi">K <span>${s.kills}</span></div>
+            <div class="rsi">A <span>${s.assistencias}</span></div>
+            <div class="rsi">P <span>${s.plants}</span></div>
+            <div class="rsi">WR <span style="color:${wr>=50?'var(--green)':'var(--red)'}">${wr}%</span></div>
+            <div class="rsi">Zeros <span style="color:${s.zeros>0?'var(--red)':'var(--muted)'}">${s.zeros}x</span></div>
+          </div>
+          <div style="display:flex;gap:3px;margin-top:6px;" title="Últimas partidas">${trend}</div>
+        </div>
+        <div style="text-align:right;padding-left:10px;">
+          <div class="rank-pts-big ${cls}">${s.pts>0?'+':''}${s.pts}</div>
+          <div class="bar-wrap" style="margin-left:auto;"><div class="bar-fill" style="width:${bW}%;background:${cb}"></div></div>
+          <div style="font-size:9px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-top:4px;">${s.partidas} partidas ▼</div>
+        </div>
+      </div>
+      <div class="rank-detail" id="rd_${i}">
+        <div class="dg">
+          <div class="di"><div class="di-l">Total kills</div><div class="di-v gold">${s.kills}</div></div>
+          <div class="di"><div class="di-l">Média kills</div><div class="di-v gold">${mk}</div></div>
+          <div class="di"><div class="di-l">Assists</div><div class="di-v gold">${s.assistencias}</div></div>
+          <div class="di"><div class="di-l">Plants</div><div class="di-v gold">${s.plants}</div></div>
+          <div class="di"><div class="di-l">Clutches</div><div class="di-v pos">${s.clutches}</div></div>
+          <div class="di"><div class="di-l">Aces</div><div class="di-v pos">${s.aces}</div></div>
+          <div class="di"><div class="di-l">Zerado</div><div class="di-v ${s.zeros>0?'neg':'gold'}">${s.zeros}x</div></div>
+          <div class="di"><div class="di-l">Win Rate</div><div class="di-v ${wr>=50?'pos':'neg'}">${wr}%</div></div>
+        </div>
+        ${rps?`<div style="margin-top:8px;"><div style="font-size:9px;letter-spacing:2px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-bottom:6px;">MOTIVOS DOS PONTOS</div>${rps}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = html;
+}
+
+async function renderizarHistorico(){
+  const estado=await getEstado();const partidas=estado.partidas||[];
+  const container=document.getElementById('history-content');
+  if(!partidas.length){container.innerHTML='<div class="empty-state">// Nenhuma partida no histórico</div>';return;}
+  container.innerHTML=[...partidas].sort((a,b)=>b.ts-a.ts).map(p=>{
+    const idx=(estado.partidas||[]).findIndex(x=>x.ts===p.ts);
+    const isWin=p.resultado==='vitoria';
+    const bc=isWin?'win-badge':'loss-badge';const bt=isWin?'VITÓRIA':'DERROTA';
+    const pData = p.data ? new Date(p.data+'T12:00:00') : null;
+    const hojeStr = new Date().toDateString();
+    const ontemDate = new Date(); ontemDate.setDate(ontemDate.getDate()-1);
+    const ontemStr = ontemDate.toDateString();
+    let ds = '—';
+    if(pData) {
+      if(pData.toDateString()===hojeStr) ds='Hoje';
+      else if(pData.toDateString()===ontemStr) ds='Ontem';
+      else ds=pData.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+    }
+    const pills=p.pontuacoes.map(s=>{const cls=s.pts>0?'pill-pos':s.pts<0?'pill-neg':'pill-zero';return`<span class="pill ${cls}">${s.nome} ${s.pts>0?'+':''}${s.pts}</span>`;}).join('');
+    return`<div class="match-card" style="border:1px solid ${isWin?'rgba(46,204,113,0.25)':'rgba(232,50,26,0.3)'};border-left:3px solid ${isWin?'var(--green)':'var(--red)'}">
+      <div class="match-header">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="match-date-lbl">${ds}</span>
+          <span class="match-mapa-lbl">${p.mapa||'—'}</span>
+          <span class="ph-badge ${bc}">${bt}</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-sm btn-blue" onclick="toggleEdit(${idx})" style="padding:2px 9px;font-size:9px;">Editar</button>
+          <button class="btn btn-sm btn-red" onclick="abrirModal('partida',${idx})" style="padding:2px 9px;font-size:9px;">Apagar</button>
+        </div>
+      </div>
+      <div class="pills">${pills}</div>
+      <div id="edit-hist-${idx}" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
+          <div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;">DATA</div>
+            <input type="date" id="edit-data-${idx}" value="${p.data||''}" class="result-select" style="font-size:11px;padding:4px 8px;">
+          </div>
+          <div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;">RESULTADO</div>
+            <select id="edit-res-${idx}" class="result-select" style="font-size:11px;padding:4px 8px;">
+              <option value="vitoria" ${isWin?'selected':''}>Vitória</option>
+              <option value="derrota" ${!isWin?'selected':''}>Derrota</option>
+            </select>
+          </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+          <thead><tr>
+            <th style="text-align:left;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);">Jogador</th>
+            <th style="text-align:center;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);">Plants</th>
+            <th style="text-align:center;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);">Clutch</th>
+            <th style="text-align:center;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);">Ace</th>
+            <th style="text-align:center;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);">TK</th>
+          </tr></thead>
+          <tbody>
+            ${(p.pontuacoes||[]).map((s,si)=>`<tr>
+              <td style="padding:4px 8px;font-weight:600;">${s.nome}</td>
+              <td style="text-align:center;padding:4px 8px;"><input type="number" min="0" max="20" value="${s.plants||0}" id="ep-${idx}-${si}" style="width:45px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:2px 4px;border-radius:2px;text-align:center;"></td>
+              <td style="text-align:center;padding:4px 8px;"><input type="checkbox" ${s.clutch?'checked':''} id="ec-${idx}-${si}" style="accent-color:var(--gold);width:14px;height:14px;"></td>
+              <td style="text-align:center;padding:4px 8px;"><input type="checkbox" ${s.ace?'checked':''} id="ea-${idx}-${si}" style="accent-color:var(--gold);width:14px;height:14px;"></td>
+              <td style="text-align:center;padding:4px 8px;"><input type="number" min="0" max="5" value="${s.teamkills||0}" id="et-${idx}-${si}" style="width:45px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:2px 4px;border-radius:2px;text-align:center;"></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        <button class="btn btn-green btn-sm" onclick="salvarEdicaoHistorico(${idx})">Salvar</button>
+        <button class="btn btn-sm" onclick="toggleEdit(${idx})" style="margin-left:6px;">Cancelar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function log(msg,tipo=''){const box=document.getElementById('log-box');const now=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});const s=document.createElement('span');s.className=tipo?'log-'+tipo:'';s.innerHTML=`<br>[${now}] ${msg}`;box.appendChild(s);box.scrollTop=box.scrollHeight;}
+function abrirModal(tipo,idx){modalAcao=tipo;modalParam=idx;const t=document.getElementById('modal-title'),b=document.getElementById('modal-body'),btn=document.getElementById('modal-btn');if(tipo==='tudo'){t.textContent='Apagar tudo';b.textContent='Apagar TODO o histórico?';btn.textContent='Apagar tudo';}else{t.textContent='Apagar partida';b.textContent='Apagar esta partida?';btn.textContent='Apagar';}btn.onclick=executarModal;document.getElementById('modal-wrap').classList.add('show');}
+function fecharModal(){document.getElementById('modal-wrap').classList.remove('show');}
+function toggleEdit(idx){
+  const el = document.getElementById('edit-hist-'+idx);
+  if(el) el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+
+async function salvarEdicaoHistorico(idx){
+  const estado = await getEstado();
+  if(!estado.partidas[idx]) return;
+
+  // Update data and resultado
+  const novaData = document.getElementById('edit-data-'+idx)?.value;
+  const novoRes = document.getElementById('edit-res-'+idx)?.value;
+  if(novaData) estado.partidas[idx].data = novaData;
+  if(novoRes) estado.partidas[idx].resultado = novoRes;
+
+  // Update plants, clutch, ace, teamkills for each player
+  const pontuacoes = estado.partidas[idx].pontuacoes || [];
+  pontuacoes.forEach((s,si) => {
+    const plants = parseInt(document.getElementById(`ep-${idx}-${si}`)?.value||0);
+    const clutch = document.getElementById(`ec-${idx}-${si}`)?.checked||false;
+    const ace = document.getElementById(`ea-${idx}-${si}`)?.checked||false;
+    const tk = parseInt(document.getElementById(`et-${idx}-${si}`)?.value||0);
+    
+    s.plants = plants;
+    s.clutch = clutch;
+    s.ace = ace;
+    s.teamkills = tk;
+
+    // Recalculate points
+    const todos = pontuacoes;
+    const maxK = Math.max(...todos.map(x=>x.kills));
+    const maxA = Math.max(...todos.map(x=>x.assistencias||0));
+    let pts = 0; const det = [];
+    if(s.ace){pts+=5;det.push('+5 (ace)');}
+    if(s.clutch){pts+=2;det.push('+2 (clutch)');}
+    if(s.kills===maxK&&maxK>0){pts+=1;det.push('+1 (mais kills)');}
+    if(s.kills>=10){pts+=1;det.push('+1 (10+ kills)');}
+    if(s.plants>0){pts+=s.plants;det.push(`+${s.plants} (plants)`);}
+    if((s.assistencias||0)===Math.max(...todos.map(x=>x.assistencias||0))&&(s.assistencias||0)>0){pts+=0.5;det.push('+0.5 (mais assists)');}
+    if(s.kills===0){pts-=1;det.push('-1 (zerado)');}
+    if(tk>0){pts-=tk;det.push(`-${tk} (amiguinho)`);}
+    s.pts = pts;
+    s.det = det;
+  });
+
+  await salvarEstado(estado);
+  toggleEdit(idx);
+  renderizarHistorico();
+  renderizarRanking();
+  renderizarClassificacao();
+  log('Partida editada e pontos recalculados!','ok');
+}
+
+async function executarModal(){if(modalAcao==='tudo'){await salvarEstado({partidas:[]});}else if(modalAcao==='partida'&&modalParam!==null){const e=await getEstado();e.partidas.splice(modalParam,1);await salvarEstado(e);}fecharModal();renderizarRanking();renderizarHistorico();}
+function carregarMais(){
+  partidasVisiveis += 10;
+  // Se chegou no fim do cache, busca mais do servidor
+  if(partidasVisiveis > partidasCache.length) {
+    log('Todas as partidas do cache foram carregadas.','info');
+  }
+  const slice = partidasCache.slice(0, partidasVisiveis);
+  renderizarListaReal(slice);
+}
+
+function trocarAba(aba,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+aba).classList.add('active');el.classList.add('active');if(aba==='ranking')renderizarRanking();if(aba==='historico')renderizarHistorico();if(aba==='resumo')gerarResumo();if(aba==='classificacao')renderizarClassificacao();}
+
+async function renderizarClassificacao(){
+  const estado=await getEstado();
+  const partidas=estado.partidas||[];
+  const container=document.getElementById('class-content');
+
+  if(!partidas.length){
+    container.innerHTML='<div class="empty-state">// Nenhuma partida registrada ainda.<br><br>Registre partidas na aba Sessão para ver a classificação geral.</div>';
+    return;
+  }
+
+  // Calcular stats de TODOS os jogadores em TODAS as partidas
+  const stats={};
+  TODOS_JOGADORES.forEach(j => {
+    stats[j] = {nome:j,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};
+  });
+
+  partidas.forEach(p => {
+    p.pontuacoes.forEach(s => {
+      if(!stats[s.nome]) stats[s.nome]={nome:s.nome,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};
+      const t=stats[s.nome];
+      t.pts+=s.pts;
+      t.kills+=s.kills||0;
+      t.assistencias+=s.assistencias||0;
+      t.plants+=s.plants||0;
+      t.clutches+=s.clutch?1:0;
+      t.aces+=s.ace?1:0;
+      t.zeros+=s.kills===0?1:0;
+      t.vitorias+=p.resultado==='vitoria'?1:0;
+      t.derrotas+=p.resultado==='derrota'?1:0;
+      t.partidas++;
+      t.ptsHistorico.push(s.pts);
+    });
+  });
+
+  // Ordenar por pontos, jogadores sem partidas ficam no fim
+  const ord = Object.values(stats)
+    .sort((a,b) => {
+      if(a.partidas===0 && b.partidas===0) return 0;
+      if(a.partidas===0) return 1;
+      if(b.partidas===0) return -1;
+      return b.pts - a.pts;
+    });
+
+  const maxPts = Math.max(...ord.filter(s=>s.partidas>0).map(s=>Math.abs(s.pts)), 1);
+  const totalPartidas = partidas.length;
+  const totalVitorias = partidas.filter(p=>p.resultado==='vitoria').length;
+  const wr = Math.round(totalVitorias/totalPartidas*100);
+
+  // Stats globais do time
+  let html = `
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:12px;">CLASSIFICAÇÃO GERAL — TODOS OS TEMPOS</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
+        <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${totalPartidas}</div></div>
+        <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${totalVitorias}</div></div>
+        <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${totalPartidas-totalVitorias}</div></div>
+        <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${wr>=50?'green':'red'}">${wr}%</div></div>
+      </div>
+    </div>`;
+
+  // Tabela completa
+  html += `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border);">
+          <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">#</th>
+          <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">JOGADOR</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">PTS</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">JOGOS</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">K</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">A</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">P</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">KMD</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">WR%</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ACE</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">CLUTCH</th>
+          <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ZERADO</th>
+          <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ÚLTIMAS 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${ord.map((s,i) => {
+          if(s.partidas===0) {
+            return `<tr style="opacity:0.35;border-bottom:1px solid rgba(255,170,0,0.04);">
+              <td style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">—</td>
+              <td style="padding:10px 8px;font-weight:700;letter-spacing:1px;">${s.nome}</td>
+              <td colspan="11" style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);text-align:center;">sem partidas registradas</td>
+            </tr>`;
+          }
+          const cls = s.pts>0?'var(--green)':s.pts<0?'var(--red)':'var(--muted)';
+          const kmd = s.partidas>0?(s.kills/s.partidas).toFixed(1):0;
+          const wrP = s.partidas>0?Math.round(s.vitorias/s.partidas*100):0;
+          const bW = Math.round((Math.abs(s.pts)/maxPts)*80);
+          const podium = i===0?'◆':i===1?'②':i===2?'③':i+1;
+          const podiumColor = i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--muted)';
+          const ultimas5 = s.ptsHistorico.slice(-5).map(p=>
+            `<span style="display:inline-block;width:16px;height:16px;border-radius:2px;font-size:8px;line-height:16px;text-align:center;font-family:'Share Tech Mono',monospace;background:${p>0?'rgba(46,204,113,0.15)':p<0?'rgba(232,50,26,0.15)':'rgba(255,255,255,0.05)'};color:${p>0?'var(--green)':p<0?'var(--red)':'var(--muted)'};">${p>0?'+'+p:p}</span>`
+          ).join('');
+          const bgRow = i===0?'rgba(255,170,0,0.03)':i%2===0?'':'rgba(255,255,255,0.01)';
+          return `<tr style="background:${bgRow};border-bottom:1px solid rgba(255,170,0,0.04);">
+            <td style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:13px;color:${podiumColor};font-weight:700;">${podium}</td>
+            <td style="padding:10px 8px;">
+              <div style="font-weight:700;font-size:13px;letter-spacing:1px;${i===0?'color:var(--gold);':''}">${s.nome}</div>
+              <div style="margin-top:3px;height:2px;background:rgba(255,255,255,0.05);border-radius:1px;width:80px;">
+                <div style="height:2px;border-radius:1px;width:${bW}%;background:${s.pts>=0?'var(--gold)':'var(--red)'};"></div>
+              </div>
+            </td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:16px;font-weight:700;color:${cls};">${s.pts>0?'+':''}${s.pts}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">${s.partidas}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold);">${s.kills}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;">${s.assistencias}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;">${s.plants}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold);">${kmd}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${wrP>=50?'var(--green)':'var(--red)'};">${wrP}%</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.aces>0?'var(--gold)':'var(--muted)'};">${s.aces}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.clutches>0?'var(--blue)':'var(--muted)'};">${s.clutches}</td>
+            <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.zeros>0?'var(--red)':'var(--muted)'};">${s.zeros}x</td>
+            <td style="padding:10px 8px;">${ultimas5}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+
+  container.innerHTML = html;
+}
+
+renderJogadoresGrid();
+renderizarRanking();
+renderizarHistorico();
+// Migrar dados do localStorage para o servidor se existir
+(async()=>{
+  try {
+    const local = localStorage.getItem('r6_imb10');
+    if(local) {
+      const d = JSON.parse(local);
+      if(d.partidas?.length > 0) {
+        const srv = await getEstado();
+        if(srv.partidas.length === 0) {
+          await salvarEstado(d);
+          log('Dados migrados do localStorage!','ok');
+          renderizarRanking();
+          renderizarHistorico();
+        }
+        localStorage.removeItem('r6_imb10');
+      }
+    }
+  } catch(e){}
+})();
+</script>
+</body>
+</html>
