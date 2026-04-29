@@ -177,7 +177,10 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
         <div class="header-sub">Rainbow Six Siege · Análise do Time</div>
       </div>
     </div>
-    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);text-align:right;" id="header-date"></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);text-align:right;" id="header-date"></div>
+      <button class="btn btn-sm btn-blue" id="btn-sync" onclick="sincronizarHostinger()" style="display:none;">⬆ Sincronizar</button>
+    </div>
   </div>
 
   <div class="tabs">
@@ -306,6 +309,51 @@ document.getElementById('header-date').innerHTML = hoje.toLocaleDateString('pt-B
 document.getElementById('match-date').value = hoje.toISOString().split('T')[0];
 document.getElementById('resumo-date').value = hoje.toISOString().split('T')[0];
 
+// Mostrar botão sync apenas no localhost
+if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+  document.getElementById('btn-sync').style.display = 'inline-block';
+}
+
+async function sincronizarHostinger() {
+  const btn = document.getElementById('btn-sync');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Enviando...';
+  try {
+    const dados = await getEstado();
+    const resp = await fetch('https://imbteam.site/api/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ senha: 'imb2024', dados })
+    });
+    const result = await resp.json();
+    if(result.success) {
+      btn.innerHTML = '✓ Sincronizado!';
+      btn.style.borderColor = 'var(--green)';
+      btn.style.color = 'var(--green)';
+      log(`✓ ${result.partidas} partidas enviadas para imbteam.site!`, 'ok');
+      setTimeout(() => {
+        btn.innerHTML = '⬆ Sincronizar';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 3000);
+    } else {
+      throw new Error(result.error || 'Erro desconhecido');
+    }
+  } catch(e) {
+    log(`Erro ao sincronizar: ${e.message}`, 'err');
+    btn.innerHTML = '✗ Erro';
+    btn.style.borderColor = 'var(--red)';
+    btn.style.color = 'var(--red)';
+    setTimeout(() => {
+      btn.innerHTML = '⬆ Sincronizar';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+      btn.disabled = false;
+    }, 3000);
+  }
+}
+
 async function getEstado(){
   try {
     const r = await fetch('/api/data');
@@ -338,7 +386,6 @@ function selecionarRef(nome){
   if(jogadorRef) log(`Referência: ${jogadorRef}`,'ok');
 }
 
-// ============ FETCH REAL DO TRACKER.GG ============
 async function buscarPartidas(){
   if(!jogadorRef) return;
   const btn=document.getElementById('btn-buscar');
@@ -365,7 +412,6 @@ async function buscarPartidas(){
     partidasCache = matches;
     partidasVisiveis = 15;
     renderizarListaReal(matches.slice(0, partidasVisiveis));
-    // Sem limite - todas as partidas ficam no cache
   } catch(e) {
     log(`Erro: ${e.message}`,'err');
     log('Dica: abra r6.tracker.network no navegador, faça login, depois volte aqui.','info');
@@ -418,8 +464,6 @@ function renderizarListaReal(matches){
       const rL = rLost;
       const placar = `${rW}:${rL}`;
       const pc = won?'win':'loss';
-
-      // Stats do jogador ref para mostrar na linha
       const k = stats.kills?.value || 0;
       const a = stats.assists?.value || 0;
       const d2 = stats.deaths?.value || 0;
@@ -439,7 +483,6 @@ function renderizarListaReal(matches){
   document.getElementById('lista-partidas').innerHTML=html;
   document.getElementById('lista-wrap').style.display='block';
 
-  // Mostrar botão Carregar Mais se tiver mais no cache
   const loadWrap = document.getElementById('load-more-wrap');
   const loadInfo = document.getElementById('load-more-info');
   if(partidasCache.length > matches.length) {
@@ -461,18 +504,11 @@ function selecionarPartidaReal(idx){
   const meta = m.metadata || {};
   const mapa = meta.sessionMapName || meta.mapName || meta.map || '—';
   const timestamp = meta.timestamp || m.attributes?.startedAt || '';
-  // Usar timezone de Brasilia (UTC-3) para calcular a data correta
-  const dataPartida = timestamp ? 
-    new Date(new Date(timestamp).getTime() - 3*60*60*1000).toISOString().split('T')[0] : 
+  const dataPartida = timestamp ?
+    new Date(new Date(timestamp).getTime() - 3*60*60*1000).toISOString().split('T')[0] :
     hoje.toISOString().split('T')[0];
 
-  // A API retorna 1 segment com todos os dados do jogador de referência
-  // segments[0] = overview com stats gerais
-  // Buscar o segment correto - pode ser 'overview' ou o único disponível
   const allSegs = m.segments || [];
-  
-  // Pegar todos os segments que têm platformUserHandle (são jogadores)
-  // Na API do tracker.gg, cada match retorna os dados do próprio jogador
   const refSeg = allSegs.find(s => {
     const n = s.metadata?.platformUserHandle || s.metadata?.platformUserIdentifier || '';
     return n.toLowerCase() === jogadorRef.toLowerCase();
@@ -485,18 +521,13 @@ function selecionarPartidaReal(idx){
 
   jogadoresPartida = [];
 
-  // Tentar pegar todos os jogadores do squad dos segments
-  // Alguns endpoints retornam múltiplos players
   allSegs.forEach(s => {
     const nome = s.metadata?.platformUserHandle || s.metadata?.platformUserIdentifier || '';
     if(!nome) return;
     if(!TODOS_JOGADORES.some(j => j.toLowerCase() === nome.toLowerCase())) return;
     const st = s.stats || {};
-    // ace: kills5K ou campo aces
     const aceVal = (st.kills5K?.value || 0) > 0 || (st.aces?.value || 0) > 0;
-    // clutch: campo clutches
     const clutchVal = (st.clutches?.value || 0) > 0;
-    // teamkill: campo teamKills (K maiúsculo)
     const tkVal = st.teamKills?.value || 0;
     jogadoresPartida.push({
       nome,
@@ -544,45 +575,39 @@ function selecionarPartidaReal(idx){
     document.getElementById('form-wrap').scrollIntoView({behavior:'smooth', block:'nearest'});
   }, 100);
 
-  // Buscar outros jogadores do squad em background
   buscarSquadDaPartida(m, idx, dataPartida, mapa, won, rW, rL);
 }
 
-// Busca os outros jogadores do IMB que estavam na mesma partida
 async function buscarSquadDaPartida(matchRef, matchIdx, dataPartida, mapa, won, rW, rL) {
   const matchTimestamp = matchRef.metadata?.timestamp || '';
   if(!matchTimestamp) return;
 
   const matchTime = new Date(matchTimestamp).getTime();
-  const MARGEM = 5 * 60 * 1000; // 5 minutos de margem
-  const squadEncontrado = [...jogadoresPartida]; // começa com o ref
+  const MARGEM = 5 * 60 * 1000;
+  const squadEncontrado = [...jogadoresPartida];
 
   const outrosJogadores = TODOS_JOGADORES.filter(j => j.toLowerCase() !== jogadorRef.toLowerCase());
 
   for(const jogador of outrosJogadores) {
     try {
-      await new Promise(r => setTimeout(r, 600)); // delay para não ser bloqueado
+      await new Promise(r => setTimeout(r, 600));
       const url = `https://api.tracker.gg/api/v2/r6siege/standard/matches/psn/${encodeURIComponent(jogador)}?gamemode=pvp_ranked`;
       const resp = await fetch(url, { credentials: 'include', headers: { 'Accept': 'application/json' } });
       if(!resp.ok) continue;
       const data = await resp.json();
       const matches = data?.data?.matches || data?.data || [];
 
-      // Procura partida no mesmo horário (±5 min)
       const partida = matches.find(m => {
         const t = new Date(m.metadata?.timestamp || '').getTime();
         return Math.abs(t - matchTime) < MARGEM;
       });
 
       if(!partida) continue;
-
-      // Já temos esse jogador?
       if(squadEncontrado.some(j => j.nome.toLowerCase() === jogador.toLowerCase())) continue;
 
       const seg = partida.segments?.[0] || {};
       const st = seg.stats || {};
       const clutchVal = (st.clutches?.value||0)>0 || (st.clutchesWon?.value||0)>0;
-
       const aceVal2 = (st.kills5K?.value || 0) > 0 || (st.aces?.value || 0) > 0;
       const tkVal2 = st.teamKills?.value || 0;
       squadEncontrado.push({
@@ -597,19 +622,15 @@ async function buscarSquadDaPartida(matchRef, matchIdx, dataPartida, mapa, won, 
       });
 
       log(`Squad: ${jogador} encontrado na partida!`, 'ok');
-    } catch(e) {
-      // silencioso
-    }
+    } catch(e) {}
   }
 
-  // Atualizar jogadoresPartida com squad completo
   if(squadEncontrado.length > jogadoresPartida.length) {
     jogadoresPartida = squadEncontrado;
     renderizarTabela();
     atualizarPrevia();
   }
 
-  // Atualizar header
   document.getElementById('partida-header').innerHTML=`
     <div class="ph-mapa">${mapa.toUpperCase()}</div>
     <span class="ph-badge ${won?'win-badge':'loss-badge'}">${won?'VITÓRIA':'DERROTA'}</span>
@@ -645,31 +666,14 @@ function calcPontos(j, todos, data, estadoAtual){
   const estado=estadoAtual||{partidas:[]}; let pts=0; const det=[];
   const maxK=Math.max(...todos.map(x=>x.kills));
   const maxA=Math.max(...todos.map(x=>x.assistencias||0));
-
-  // Ace +5
   if(j.ace){pts+=5;det.push('+5 (ace)');}
-
-  // Clutch +2
   if(j.clutch){pts+=2;det.push('+2 (clutch)');}
-
-  // Mais kills do time +1
   if(j.kills===maxK&&maxK>0){pts+=1;det.push('+1 (mais kills)');}
-
-  // Mais de 10 kills +1
   if(j.kills>=10){pts+=1;det.push('+1 (10+ kills)');}
-
-  // Plant +1 por cada plant
   if((j.plants||0)>0){pts+=(j.plants);det.push(`+${j.plants} (plants)`);}
-
-  // Mais assists +0.5
   if((j.assistencias||0)===maxA&&maxA>0){pts+=0.5;det.push('+0.5 (mais assists)');}
-
-  // Zerado -1
   if(j.kills===0){pts-=1;det.push('-1 (zerado)');}
-
-  // Matar o amiguinho -1 por teamkill
   if((j.teamkills||0)>0){pts-=(j.teamkills);det.push(`-${j.teamkills} (amiguinho)`);}
-
   return{pts,det};
 }
 
@@ -701,7 +705,6 @@ async function registrarPartida(){
   await salvarEstado(estado);
   log(`✓ Partida de ${mapa} registrada!`,'ok');
   cancelarForm();
-  // Ir para o ranking automaticamente
   setTimeout(() => {
     trocarAba('classificacao', document.querySelectorAll('.tab')[1]);
     window.scrollTo({top:0, behavior:'smooth'});
@@ -754,7 +757,6 @@ async function gerarResumo(){
       <div class="destaque-card azul"><div class="destaque-titulo">Mais Assistências</div><div class="destaque-nome">${maisAssists?.nome||'—'}</div><div class="destaque-valor">${maisAssists?.assistencias||0}</div><div class="destaque-sub">assists no dia</div><div class="decor-num">A</div></div>
       <div class="destaque-card roxo"><div class="destaque-titulo">Mais Decisivo</div><div class="destaque-nome">${maisDecisivo?.nome||'—'}</div><div class="destaque-valor">${(maisDecisivo?.clutches||0)+(maisDecisivo?.aces||0)}</div><div class="destaque-sub">${maisDecisivo?.clutches||0} clutch · ${maisDecisivo?.aces||0} ace</div><div class="decor-num">!</div></div>
       <div class="destaque-card verde"><div class="destaque-titulo">Mais Plants</div><div class="destaque-nome">${maisPlants?.nome||'—'}</div><div class="destaque-valor">${maisPlants?.plants||0}</div><div class="destaque-sub">bombs plantadas</div><div class="decor-num">B</div></div>
-
     </div>
     <div class="section-label">Placar detalhado</div>
     <table class="resumo-table">
@@ -798,7 +800,6 @@ async function renderizarRanking(){
     return;
   }
 
-  // Header com total de partidas
   let html = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
     <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${partidas.length}</div></div>
     <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${partidas.filter(p=>p.resultado==='vitoria').length}</div></div>
@@ -806,7 +807,6 @@ async function renderizarRanking(){
     <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${partidas.filter(p=>p.resultado==='vitoria').length/partidas.length>=0.5?'green':'red'}">${Math.round(partidas.filter(p=>p.resultado==='vitoria').length/partidas.length*100)}%</div></div>
   </div>`;
 
-  // Pódio top 3
   if(ord.length >= 3) {
     const podiumColors = ['var(--gold)','#aaaaaa','#cd7f32'];
     const podiumBg = ['rgba(255,170,0,0.08)','rgba(160,160,160,0.05)','rgba(180,100,40,0.05)'];
@@ -817,14 +817,12 @@ async function renderizarRanking(){
     podiumEl.style.gap = '8px';
     podiumEl.innerHTML = [1,0,2].map(i => {
       const [nome,s] = ord[i];
-      const cls = s.pts>0?'pos':s.pts<0?'neg':'zero';
-      const h = i===0?'90px':i===1?'70px':'60px';
       return `<div style="background:${podiumBg[i]};border:1px solid ${podiumColors[i]}33;border-radius:4px;padding:12px;text-align:center;order:${i===0?1:i===1?0:2};">
         <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:${podiumColors[i]};margin-bottom:4px;">${podiumNums[i]}</div>
         <div style="font-size:14px;font-weight:700;letter-spacing:1px;margin-bottom:6px;color:${podiumColors[i]};">${nome}</div>
         <div style="font-family:'Share Tech Mono',monospace;font-size:22px;font-weight:700;color:${s.pts>0?'var(--green)':s.pts<0?'var(--red)':'var(--muted)'};">${s.pts>0?'+':''}${s.pts}</div>
         <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px;">${s.partidas} partidas · ${Math.round(s.vitorias/s.partidas*100)}% WR</div>
-        <div style="height:${h};border-left:2px solid ${podiumColors[i]}44;margin:8px auto 0;width:1px;"></div>
+        <div style="height:${i===0?'90px':i===1?'70px':'60px'};border-left:2px solid ${podiumColors[i]}44;margin:8px auto 0;width:1px;"></div>
       </div>`;
     }).join('');
   }
@@ -837,18 +835,13 @@ async function renderizarRanking(){
     const wr=s.partidas>0?Math.round(s.vitorias/s.partidas*100):0;
     const cnt={};s.razoes.forEach(r=>{cnt[r]=(cnt[r]||0)+1;});
     const rps=Object.entries(cnt).map(([r,c])=>`<span class="rp ${r.startsWith('-')?'rp-neg':'rp-pos'}">${r}${c>1?' ×'+c:''}</span>`).join('');
-
-    // Trend: últimas 5 partidas
     const ultimas5 = s.ptsHistorico.slice(-5);
     const trend = ultimas5.map(p=>`<span style="display:inline-block;width:18px;height:18px;border-radius:3px;font-size:9px;line-height:18px;text-align:center;font-family:'Share Tech Mono',monospace;background:${p>0?'rgba(46,204,113,0.15)':p<0?'rgba(232,50,26,0.15)':'rgba(255,255,255,0.05)'};color:${p>0?'var(--green)':p<0?'var(--red)':'var(--muted)'};">${p>0?'+'+p:p}</span>`).join('');
-
-    // Medalhas
     const medals = [];
     if(i===0) medals.push('<span style="color:var(--gold);font-size:13px;" title="Líder">★</span>');
     if(s.aces>0) medals.push(`<span style="font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(255,170,0,0.1);color:var(--gold);border:1px solid rgba(255,170,0,0.25);" title="Ace">${s.aces} ACE</span>`);
     if(s.clutches>0) medals.push(`<span style="font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(74,144,217,0.1);color:var(--blue);border:1px solid rgba(74,144,217,0.25);" title="Clutch">${s.clutches} CLUTCH</span>`);
     if(s.zeros>3) medals.push('<span style="font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(232,50,26,0.1);color:var(--red);border:1px solid rgba(232,50,26,0.25);">💀 INTED</span>');
-
     const podium = ['◆','②','③'];
 
     return `<div class="rank-card ${i===0?'first':i===1?'second':i===2?'third':''}">
@@ -975,30 +968,19 @@ function toggleEdit(idx){
 async function salvarEdicaoHistorico(idx){
   const estado = await getEstado();
   if(!estado.partidas[idx]) return;
-
-  // Update data and resultado
   const novaData = document.getElementById('edit-data-'+idx)?.value;
   const novoRes = document.getElementById('edit-res-'+idx)?.value;
   if(novaData) estado.partidas[idx].data = novaData;
   if(novoRes) estado.partidas[idx].resultado = novoRes;
-
-  // Update plants, clutch, ace, teamkills for each player
   const pontuacoes = estado.partidas[idx].pontuacoes || [];
   pontuacoes.forEach((s,si) => {
     const plants = parseInt(document.getElementById(`ep-${idx}-${si}`)?.value||0);
     const clutch = document.getElementById(`ec-${idx}-${si}`)?.checked||false;
     const ace = document.getElementById(`ea-${idx}-${si}`)?.checked||false;
     const tk = parseInt(document.getElementById(`et-${idx}-${si}`)?.value||0);
-    
-    s.plants = plants;
-    s.clutch = clutch;
-    s.ace = ace;
-    s.teamkills = tk;
-
-    // Recalculate points
+    s.plants = plants; s.clutch = clutch; s.ace = ace; s.teamkills = tk;
     const todos = pontuacoes;
     const maxK = Math.max(...todos.map(x=>x.kills));
-    const maxA = Math.max(...todos.map(x=>x.assistencias||0));
     let pts = 0; const det = [];
     if(s.ace){pts+=5;det.push('+5 (ace)');}
     if(s.clutch){pts+=2;det.push('+2 (clutch)');}
@@ -1008,10 +990,8 @@ async function salvarEdicaoHistorico(idx){
     if((s.assistencias||0)===Math.max(...todos.map(x=>x.assistencias||0))&&(s.assistencias||0)>0){pts+=0.5;det.push('+0.5 (mais assists)');}
     if(s.kills===0){pts-=1;det.push('-1 (zerado)');}
     if(tk>0){pts-=tk;det.push(`-${tk} (amiguinho)`);}
-    s.pts = pts;
-    s.det = det;
+    s.pts = pts; s.det = det;
   });
-
   await salvarEstado(estado);
   toggleEdit(idx);
   renderizarHistorico();
@@ -1021,9 +1001,9 @@ async function salvarEdicaoHistorico(idx){
 }
 
 async function executarModal(){if(modalAcao==='tudo'){await salvarEstado({partidas:[]});}else if(modalAcao==='partida'&&modalParam!==null){const e=await getEstado();e.partidas.splice(modalParam,1);await salvarEstado(e);}fecharModal();renderizarRanking();renderizarHistorico();}
+
 function carregarMais(){
   partidasVisiveis += 10;
-  // Se chegou no fim do cache, busca mais do servidor
   if(partidasVisiveis > partidasCache.length) {
     log('Todas as partidas do cache foram carregadas.','info');
   }
@@ -1043,7 +1023,6 @@ async function renderizarClassificacao(){
     return;
   }
 
-  // Calcular stats de TODOS os jogadores em TODAS as partidas
   const stats={};
   TODOS_JOGADORES.forEach(j => {
     stats[j] = {nome:j,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};
@@ -1053,35 +1032,26 @@ async function renderizarClassificacao(){
     p.pontuacoes.forEach(s => {
       if(!stats[s.nome]) stats[s.nome]={nome:s.nome,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};
       const t=stats[s.nome];
-      t.pts+=s.pts;
-      t.kills+=s.kills||0;
-      t.assistencias+=s.assistencias||0;
-      t.plants+=s.plants||0;
-      t.clutches+=s.clutch?1:0;
-      t.aces+=s.ace?1:0;
-      t.zeros+=s.kills===0?1:0;
-      t.vitorias+=p.resultado==='vitoria'?1:0;
-      t.derrotas+=p.resultado==='derrota'?1:0;
-      t.partidas++;
+      t.pts+=s.pts; t.kills+=s.kills||0; t.assistencias+=s.assistencias||0;
+      t.plants+=s.plants||0; t.clutches+=s.clutch?1:0; t.aces+=s.ace?1:0;
+      t.zeros+=s.kills===0?1:0; t.vitorias+=p.resultado==='vitoria'?1:0;
+      t.derrotas+=p.resultado==='derrota'?1:0; t.partidas++;
       t.ptsHistorico.push(s.pts);
     });
   });
 
-  // Ordenar por pontos, jogadores sem partidas ficam no fim
-  const ord = Object.values(stats)
-    .sort((a,b) => {
-      if(a.partidas===0 && b.partidas===0) return 0;
-      if(a.partidas===0) return 1;
-      if(b.partidas===0) return -1;
-      return b.pts - a.pts;
-    });
+  const ord = Object.values(stats).sort((a,b) => {
+    if(a.partidas===0 && b.partidas===0) return 0;
+    if(a.partidas===0) return 1;
+    if(b.partidas===0) return -1;
+    return b.pts - a.pts;
+  });
 
   const maxPts = Math.max(...ord.filter(s=>s.partidas>0).map(s=>Math.abs(s.pts)), 1);
   const totalPartidas = partidas.length;
   const totalVitorias = partidas.filter(p=>p.resultado==='vitoria').length;
   const wr = Math.round(totalVitorias/totalPartidas*100);
 
-  // Stats globais do time
   let html = `
     <div style="margin-bottom:20px;">
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:12px;">CLASSIFICAÇÃO GERAL — TODOS OS TEMPOS</div>
@@ -1093,7 +1063,6 @@ async function renderizarClassificacao(){
       </div>
     </div>`;
 
-  // Tabela completa
   html += `
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
       <thead>
@@ -1162,7 +1131,6 @@ async function renderizarClassificacao(){
 renderJogadoresGrid();
 renderizarRanking();
 renderizarHistorico();
-// Migrar dados do localStorage para o servidor se existir
 (async()=>{
   try {
     const local = localStorage.getItem('r6_imb10');

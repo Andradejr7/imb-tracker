@@ -40,6 +40,21 @@ app.post('/api/data', (req, res) => {
   }
 });
 
+// Rota: receber sync do localhost (protegida por senha)
+app.post('/api/sync', (req, res) => {
+  const { senha, dados } = req.body;
+  const SYNC_KEY = process.env.SYNC_KEY || 'imb2024';
+  if (senha !== SYNC_KEY) {
+    return res.status(401).json({ error: 'Senha incorreta' });
+  }
+  try {
+    saveData(dados);
+    res.json({ success: true, partidas: dados.partidas?.length || 0 });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Proxy para tracker.gg
 app.get('/api/matches/:player', async (req, res) => {
   try {
