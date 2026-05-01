@@ -77,8 +77,7 @@ app.get('/api/status', (req, res) => {
   res.json({ status: 'online' });
 });
 
-const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log(`\nIMB Tracker rodando em http://localhost:${PORT}\n`);
-  console.log(`Variaveis: PORT=${process.env.PORT} NODE_PORT=${process.env.NODE_PORT}\n`);
 });
