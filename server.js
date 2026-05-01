@@ -38,6 +38,29 @@ app.post('/api/data', (req, res) => {
   }
 });
 
+// Rota que envia dados para a Hostinger (servidor→servidor, sem CORS)
+app.post('/api/sync-to-hostinger', async (req, res) => {
+  try {
+    const dados = loadData();
+    const SYNC_KEY = process.env.SYNC_KEY || 'imb2024';
+    const HOSTINGER_URL = process.env.HOSTINGER_URL || 'https://imbteam.site';
+
+    const response = await axios.post(`${HOSTINGER_URL}/api/sync`, {
+      senha: SYNC_KEY,
+      dados
+    }, {
+      headers: { 'Content-Type': 'application/json' },
+      timeout: 15000
+    });
+
+    res.json({ success: true, partidas: response.data.partidas });
+  } catch(e) {
+    const msg = e.response?.data?.error || e.message;
+    res.status(500).json({ error: msg });
+  }
+});
+
+// Rota que recebe sync
 app.post('/api/sync', (req, res) => {
   const { senha, dados } = req.body;
   const SYNC_KEY = process.env.SYNC_KEY || 'imb2024';
