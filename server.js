@@ -78,6 +78,6 @@ app.get('/api/status', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`\nIMB Tracker rodando em http://localhost:${PORT}\n`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`IMB Tracker rodando em http://0.0.0.0:${PORT}`);
 });
