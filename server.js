@@ -38,7 +38,6 @@ app.post('/api/data', (req, res) => {
   }
 });
 
-// Rota que envia dados para a Hostinger (servidor→servidor, sem CORS)
 app.post('/api/sync-to-hostinger', async (req, res) => {
   try {
     const dados = loadData();
@@ -60,7 +59,6 @@ app.post('/api/sync-to-hostinger', async (req, res) => {
   }
 });
 
-// Rota que recebe sync
 app.post('/api/sync', (req, res) => {
   const { senha, dados } = req.body;
   const SYNC_KEY = process.env.SYNC_KEY || 'imb2024';
@@ -101,6 +99,7 @@ app.get('/api/status', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`IMB Tracker rodando em http://0.0.0.0:${PORT}`);
+const HOST = process.env.HOST || 'localhost';
+app.listen(PORT, HOST, () => {
+  console.log(`IMB Tracker rodando em http://${HOST}:${PORT}`);
 });
