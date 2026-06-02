@@ -474,7 +474,7 @@ async function renderizarTemporadas() {
             <div class="season-name">${t.nome}</div>
           </div>
           <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-            ${t.vencedor ? `<div class="season-champion"><span class="champ-crown">🏆</span><div><div class="champ-name" style="color:var(--gold);">${t.vencedor.nome}</div><div class="champ-stat">${t.vencedor.media > 0 ? '+' : ''}${t.vencedor.media} pts/jogo</div></div></div>` : ''}
+            ${(t.classificacao||[]).slice(0,3).map((s,i) => {const cores=['var(--gold)','#aaaaaa','#cd7f32'];const medalhas=['🥇','🥈','🥉'];return `<div class="season-champion"><span class="champ-crown">${medalhas[i]}</span><div><div class="champ-name" style="color:${cores[i]};">${s.nome}</div><div class="champ-stat">${s.media>0?'+':''}${s.media} pts/jogo</div></div></div>`;}).join('')}
             <span class="season-badge">${t.totalPartidas} partidas · ${t.wr}% WR</span>
           </div>
         </div>
