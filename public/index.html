@@ -64,7 +64,6 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
 .pr-squad{display:flex;gap:4px;flex-wrap:wrap;flex:1;}
 .sq-pill{font-size:9px;font-family:'Share Tech Mono',monospace;padding:2px 6px;border-radius:2px;}
 .sq-ref{border:1px solid rgba(255,170,0,0.4);background:rgba(255,170,0,0.1);color:var(--gold);}
-.sq-time{border:1px solid rgba(46,204,113,0.3);background:rgba(46,204,113,0.08);color:var(--green);}
 .ph-box{background:rgba(46,204,113,0.04);border:1px solid rgba(46,204,113,0.22);border-radius:4px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .ph-mapa{font-size:17px;font-weight:700;letter-spacing:2px;color:var(--gold);}
 .ph-badge{font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 9px;border-radius:2px;}
@@ -154,7 +153,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
 .resumo-table .nome-cell{font-weight:700;letter-spacing:1px;}
 .modal-wrap{display:none;min-height:180px;background:rgba(0,0,0,0.7);border-radius:4px;align-items:center;justify-content:center;padding:20px;margin-top:10px;}
 .modal-wrap.show{display:flex;}
-.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:22px;max-width:320px;width:100%;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:22px;max-width:380px;width:100%;}
 .modal-title{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
 .modal-body{font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;line-height:1.6;margin-bottom:16px;}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;}
@@ -162,6 +161,26 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
 .spinner{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,170,0,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:6px;vertical-align:middle;}
 .cors-tip{background:rgba(74,144,217,0.08);border:1px solid rgba(74,144,217,0.25);border-radius:4px;padding:12px 14px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--blue);line-height:1.8;margin-bottom:14px;}
 .cors-tip strong{color:var(--text);}
+/* Temporadas */
+.season-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden;}
+.season-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:12px;flex-wrap:wrap;}
+.season-header:hover{background:var(--accent);}
+.season-num{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;}
+.season-name{font-size:18px;font-weight:700;letter-spacing:2px;color:var(--gold);}
+.season-badge{font-size:9px;font-family:'Share Tech Mono',monospace;padding:3px 10px;border-radius:2px;background:rgba(255,170,0,0.1);border:1px solid rgba(255,170,0,0.3);color:var(--gold);}
+.season-badge.active{background:rgba(46,204,113,0.1);border-color:rgba(46,204,113,0.3);color:var(--green);}
+.season-champion{display:flex;align-items:center;gap:10px;}
+.champ-crown{font-size:20px;}
+.champ-name{font-size:15px;font-weight:700;letter-spacing:1px;}
+.champ-stat{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
+.season-body{display:none;padding:14px 16px;border-top:1px solid var(--border);}
+.season-body.open{display:block;}
+.season-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:6px;margin-bottom:14px;}
+.encerrar-box{background:rgba(232,50,26,0.05);border:1px solid rgba(232,50,26,0.2);border-radius:4px;padding:14px;margin-top:16px;}
+.encerrar-title{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--red);margin-bottom:6px;text-transform:uppercase;}
+.encerrar-desc{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;margin-bottom:12px;}
+.modal-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;padding:8px 12px;border-radius:2px;width:100%;margin-bottom:12px;}
+.modal-input:focus{outline:none;border-color:var(--gold);}
 </style>
 </head>
 <body>
@@ -186,11 +205,12 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
     <button class="tab" onclick="trocarAba('ranking',this)">Ranking</button>
     <button class="tab" onclick="trocarAba('historico',this)">Histórico</button>
     <button class="tab" onclick="trocarAba('resumo',this)">Resumo da Noite</button>
+    <button class="tab" onclick="trocarAba('temporadas',this)">Temporadas</button>
   </div>
 
   <div class="panel active" id="panel-sessao">
     <div class="cors-tip">
-      <strong>⚡ Como usar:</strong> Abra o <strong>r6.tracker.network</strong> no mesmo navegador e faça login. Depois volte aqui, selecione o jogador de referência e clique em <strong>Buscar Partidas</strong>. O site vai puxar as partidas reais automaticamente.
+      <strong>⚡ Como usar:</strong> Abra o <strong>r6.tracker.network</strong> no mesmo navegador e faça login. Depois volte aqui, selecione o jogador de referência e clique em <strong>Buscar Partidas</strong>.
     </div>
     <div class="ref-box">
       <div class="ref-title">Jogador de referência</div>
@@ -267,12 +287,14 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
     </div>
     <div id="resumo-content"><div class="empty-state">// Selecione uma data para ver o resumo da noite</div></div>
   </div>
+  <div class="panel" id="panel-temporadas"><div id="temporadas-content"></div></div>
 </div>
 
 <div class="modal-wrap" id="modal-wrap">
   <div class="modal-box">
     <div class="modal-title" id="modal-title">Confirmar</div>
     <div class="modal-body" id="modal-body"></div>
+    <input type="text" class="modal-input" id="modal-input" placeholder="Nome da temporada (ex: Silent Hunt)" style="display:none;"/>
     <div class="modal-btns">
       <button class="btn btn-sm" onclick="fecharModal()">Cancelar</button>
       <button class="btn btn-sm btn-red" id="modal-btn">Confirmar</button>
@@ -312,37 +334,299 @@ async function sincronizarHostinger() {
       btn.style.borderColor = 'var(--green)';
       btn.style.color = 'var(--green)';
       log(`✓ ${result.partidas} partidas enviadas para imbteam.site!`, 'ok');
-      setTimeout(() => {
-        btn.innerHTML = '⬆ Sincronizar';
-        btn.style.borderColor = '';
-        btn.style.color = '';
-        btn.disabled = false;
-      }, 3000);
-    } else {
-      throw new Error(result.error || 'Erro desconhecido');
-    }
+      setTimeout(() => { btn.innerHTML = '⬆ Sincronizar'; btn.style.borderColor = ''; btn.style.color = ''; btn.disabled = false; }, 3000);
+    } else { throw new Error(result.error || 'Erro desconhecido'); }
   } catch(e) {
     log(`Erro ao sincronizar: ${e.message}`, 'err');
-    btn.innerHTML = '✗ Erro';
-    btn.style.borderColor = 'var(--red)';
-    btn.style.color = 'var(--red)';
-    setTimeout(() => {
-      btn.innerHTML = '⬆ Sincronizar';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-      btn.disabled = false;
-    }, 3000);
+    btn.innerHTML = '✗ Erro'; btn.style.borderColor = 'var(--red)'; btn.style.color = 'var(--red)';
+    setTimeout(() => { btn.innerHTML = '⬆ Sincronizar'; btn.style.borderColor = ''; btn.style.color = ''; btn.disabled = false; }, 3000);
   }
 }
 
 async function getEstado(){
   try { const r = await fetch('/api/data'); if(r.ok) return await r.json(); } catch(e) {}
-  return {partidas:[]};
+  return {partidas:[], temporadas:[]};
 }
 async function salvarEstado(s){
   try { await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(s)}); } catch(e) {}
 }
 
+// ============ TEMPORADAS ============
+function calcEstatisticasTemporada(partidas) {
+  const stats = {};
+  partidas.forEach(p => {
+    p.pontuacoes.forEach(s => {
+      if(!stats[s.nome]) stats[s.nome] = {nome:s.nome,pts:0,partidas:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0};
+      const t = stats[s.nome];
+      t.pts += s.pts; t.partidas++; t.kills += s.kills||0; t.assistencias += s.assistencias||0;
+      t.plants += s.plants||0; t.clutches += s.clutch?1:0; t.aces += s.ace?1:0;
+      t.zeros += s.kills===0?1:0; t.vitorias += p.resultado==='vitoria'?1:0;
+    });
+  });
+  return Object.values(stats).map(s => ({...s, media: s.partidas > 0 ? Math.round((s.pts/s.partidas)*100)/100 : 0}));
+}
+
+async function encerrarTemporada(nome) {
+  const estado = await getEstado();
+  if(!estado.partidas || estado.partidas.length === 0) { alert('Não há partidas para encerrar!'); return; }
+  if(!estado.temporadas) estado.temporadas = [];
+
+  const stats = calcEstatisticasTemporada(estado.partidas);
+  const vencedor = [...stats].sort((a,b) => b.media - a.media)[0];
+  const totalPartidas = estado.partidas.length;
+  const vitorias = estado.partidas.filter(p=>p.resultado==='vitoria').length;
+
+  const temporada = {
+    id: Date.now(),
+    nome: nome,
+    numero: estado.temporadas.length + 1,
+    dataInicio: estado.partidas[0]?.data || '',
+    dataFim: estado.partidas[estado.partidas.length-1]?.data || '',
+    totalPartidas,
+    vitorias,
+    derrotas: totalPartidas - vitorias,
+    wr: Math.round(vitorias/totalPartidas*100),
+    vencedor: vencedor ? {nome: vencedor.nome, media: vencedor.media, pts: vencedor.pts, partidas: vencedor.partidas} : null,
+    classificacao: stats.sort((a,b) => b.media - a.media).map((s,i) => ({...s, posicao: i+1}))
+  };
+
+  estado.temporadas.push(temporada);
+  estado.partidas = [];
+  await salvarEstado(estado);
+  log(`✓ Temporada "${nome}" encerrada! ${totalPartidas} partidas arquivadas.`, 'ok');
+  renderizarTemporadas();
+  renderizarClassificacao();
+  renderizarRanking();
+  renderizarHistorico();
+}
+
+async function renderizarTemporadas() {
+  const estado = await getEstado();
+  const temporadas = estado.temporadas || [];
+  const container = document.getElementById('temporadas-content');
+
+  // Calcular temporada atual
+  const partidas = estado.partidas || [];
+  const statsAtual = calcEstatisticasTemporada(partidas);
+  const vencedorAtual = statsAtual.length > 0 ? [...statsAtual].sort((a,b) => b.media - a.media)[0] : null;
+  const numAtual = temporadas.length + 1;
+
+  let html = '';
+
+  // Temporada atual
+  html += `<div class="season-card" style="border-color:rgba(46,204,113,0.4);">
+    <div class="season-header" onclick="document.getElementById('sb_atual').classList.toggle('open')">
+      <div>
+        <div class="season-num">TEMPORADA ${numAtual} · ATUAL</div>
+        <div class="season-name" style="color:var(--green);">Em andamento</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        ${vencedorAtual ? `<div class="season-champion"><span class="champ-crown">🥇</span><div><div class="champ-name" style="color:var(--green);">${vencedorAtual.nome}</div><div class="champ-stat">${vencedorAtual.media > 0 ? '+' : ''}${vencedorAtual.media} pts/jogo</div></div></div>` : '<div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--muted);">Sem partidas</div>'}
+        <span class="season-badge active">EM ANDAMENTO</span>
+      </div>
+    </div>
+    <div class="season-body" id="sb_atual">
+      <div class="season-stats-grid">
+        <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${partidas.length}</div></div>
+        <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${partidas.filter(p=>p.resultado==='vitoria').length}</div></div>
+        <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${partidas.filter(p=>p.resultado==='derrota').length}</div></div>
+        <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${partidas.length>0&&partidas.filter(p=>p.resultado==='vitoria').length/partidas.length>=0.5?'green':'red'}">${partidas.length>0?Math.round(partidas.filter(p=>p.resultado==='vitoria').length/partidas.length*100):0}%</div></div>
+      </div>
+      ${statsAtual.length > 0 ? `
+      <div class="section-label">Classificação atual (por média)</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;">
+        <thead><tr style="border-bottom:1px solid var(--border);">
+          <th style="padding:6px 8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">#</th>
+          <th style="padding:6px 8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Jogador</th>
+          <th style="padding:6px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Média</th>
+          <th style="padding:6px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Total</th>
+          <th style="padding:6px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Jogos</th>
+        </tr></thead>
+        <tbody>${[...statsAtual].sort((a,b)=>b.media-a.media).map((s,i)=>`
+          <tr style="border-bottom:1px solid rgba(255,170,0,0.04);">
+            <td style="padding:8px;font-family:'Share Tech Mono',monospace;font-size:12px;color:${i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--muted)'};">${i===0?'◆':i+1}</td>
+            <td style="padding:8px;font-weight:700;${i===0?'color:var(--gold);':''}">${s.nome}</td>
+            <td style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-weight:700;color:${s.media>0?'var(--green)':s.media<0?'var(--red)':'var(--muted)'};">${s.media>0?'+':''}${s.media}</td>
+            <td style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;color:var(--muted);">${s.pts>0?'+':''}${s.pts}</td>
+            <td style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;color:var(--muted);">${s.partidas}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>` : ''}
+      ${location.hostname === 'localhost' || location.hostname === '127.0.0.1' ? `
+      <div class="encerrar-box">
+        <div class="encerrar-title">⚠ Encerrar Temporada</div>
+        <div class="encerrar-desc">Isso irá arquivar todas as partidas atuais e zerar os dados para uma nova temporada. Esta ação não pode ser desfeita.</div>
+        <button class="btn btn-red btn-sm" onclick="abrirModalEncerrar()">Encerrar Temporada Atual</button>
+      </div>` : ''}
+    </div>
+  </div>`;
+
+  // Temporadas passadas (mais recente primeiro)
+  if(temporadas.length === 0) {
+    html += `<div class="empty-state" style="margin-top:20px;">// Nenhuma temporada encerrada ainda</div>`;
+  } else {
+    [...temporadas].reverse().forEach((t, idx) => {
+      const isFirst = idx === 0;
+      html += `<div class="season-card">
+        <div class="season-header" onclick="document.getElementById('sb_${t.id}').classList.toggle('open')">
+          <div>
+            <div class="season-num">TEMPORADA ${t.numero} · ${t.dataInicio} → ${t.dataFim}</div>
+            <div class="season-name">${t.nome}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            ${t.vencedor ? `<div class="season-champion"><span class="champ-crown">🏆</span><div><div class="champ-name" style="color:var(--gold);">${t.vencedor.nome}</div><div class="champ-stat">${t.vencedor.media > 0 ? '+' : ''}${t.vencedor.media} pts/jogo</div></div></div>` : ''}
+            <span class="season-badge">${t.totalPartidas} partidas · ${t.wr}% WR</span>
+          </div>
+        </div>
+        <div class="season-body" id="sb_${t.id}">
+          <div class="season-stats-grid">
+            <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${t.totalPartidas}</div></div>
+            <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${t.vitorias}</div></div>
+            <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${t.derrotas}</div></div>
+            <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${t.wr>=50?'green':'red'}">${t.wr}%</div></div>
+          </div>
+          <div class="section-label">Classificação final (por média)</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px;">
+            <thead><tr style="border-bottom:1px solid var(--border);">
+              <th style="padding:6px 8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">#</th>
+              <th style="padding:6px 8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Jogador</th>
+              <th style="padding:6px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Média</th>
+              <th style="padding:6px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Total</th>
+              <th style="padding:6px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">Jogos</th>
+            </tr></thead>
+            <tbody>${(t.classificacao||[]).map((s,i)=>`
+              <tr style="border-bottom:1px solid rgba(255,170,0,0.04);${i===0?'background:rgba(255,170,0,0.03);':''}">
+                <td style="padding:8px;font-family:'Share Tech Mono',monospace;font-size:12px;color:${i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--muted)'};">${i===0?'◆':i+1}</td>
+                <td style="padding:8px;font-weight:700;${i===0?'color:var(--gold);':''}">${s.nome}${i===0?' 🏆':''}</td>
+                <td style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-weight:700;color:${s.media>0?'var(--green)':s.media<0?'var(--red)':'var(--muted)'};">${s.media>0?'+':''}${s.media}</td>
+                <td style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;color:var(--muted);">${s.pts>0?'+':''}${s.pts}</td>
+                <td style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;color:var(--muted);">${s.partidas}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+    });
+  }
+
+  container.innerHTML = html;
+}
+
+function abrirModalEncerrar() {
+  modalAcao = 'encerrar';
+  document.getElementById('modal-title').textContent = 'Encerrar Temporada';
+  document.getElementById('modal-body').textContent = 'Digite o nome da nova temporada que está começando. Os dados atuais serão arquivados.';
+  document.getElementById('modal-input').style.display = 'block';
+  document.getElementById('modal-input').value = '';
+  document.getElementById('modal-input').placeholder = 'Nome da temporada que está ENCERRANDO';
+  document.getElementById('modal-btn').textContent = 'Encerrar';
+  document.getElementById('modal-btn').className = 'btn btn-sm btn-red';
+  document.getElementById('modal-btn').onclick = async () => {
+    const nome = document.getElementById('modal-input').value.trim();
+    if(!nome) { alert('Digite o nome da temporada!'); return; }
+    fecharModal();
+    await encerrarTemporada(nome);
+  };
+  document.getElementById('modal-wrap').classList.add('show');
+}
+
+// ============ CLASSIFICAÇÃO COM MÉDIA ============
+async function renderizarClassificacao(){
+  const estado = await getEstado();
+  const partidas = estado.partidas || [];
+  const container = document.getElementById('class-content');
+  if(!partidas.length){
+    container.innerHTML='<div class="empty-state">// Nenhuma partida registrada ainda.<br><br>Registre partidas na aba Sessão para ver a classificação geral.</div>';
+    return;
+  }
+  const stats={};
+  TODOS_JOGADORES.forEach(j=>{stats[j]={nome:j,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};});
+  partidas.forEach(p=>{
+    p.pontuacoes.forEach(s=>{
+      if(!stats[s.nome])stats[s.nome]={nome:s.nome,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};
+      const t=stats[s.nome];
+      t.pts+=s.pts;t.kills+=s.kills||0;t.assistencias+=s.assistencias||0;t.plants+=s.plants||0;
+      t.clutches+=s.clutch?1:0;t.aces+=s.ace?1:0;t.zeros+=s.kills===0?1:0;
+      t.vitorias+=p.resultado==='vitoria'?1:0;t.derrotas+=p.resultado==='derrota'?1:0;
+      t.partidas++;t.ptsHistorico.push(s.pts);
+    });
+  });
+
+  // Ordenar por MÉDIA
+  const ord = Object.values(stats).map(s => ({...s, media: s.partidas > 0 ? Math.round((s.pts/s.partidas)*100)/100 : 0}))
+    .sort((a,b)=>{
+      if(a.partidas===0&&b.partidas===0) return 0;
+      if(a.partidas===0) return 1;
+      if(b.partidas===0) return -1;
+      return b.media - a.media;
+    });
+
+  const maxMedia = Math.max(...ord.filter(s=>s.partidas>0).map(s=>Math.abs(s.media)),1);
+  const totalPartidas=partidas.length, totalVitorias=partidas.filter(p=>p.resultado==='vitoria').length;
+  const wr=Math.round(totalVitorias/totalPartidas*100);
+
+  let html=`<div style="margin-bottom:20px;">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:12px;">CLASSIFICAÇÃO GERAL — TODOS OS TEMPOS · ORDENADO POR MÉDIA</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
+      <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${totalPartidas}</div></div>
+      <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${totalVitorias}</div></div>
+      <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${totalPartidas-totalVitorias}</div></div>
+      <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${wr>=50?'green':'red'}">${wr}%</div></div>
+    </div></div>
+  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+    <thead><tr style="border-bottom:1px solid var(--border);">
+      <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">#</th>
+      <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">JOGADOR</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold);font-weight:700;">MÉDIA</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">TOTAL</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">JOGOS</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">K</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">A</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">P</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">KMD</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">WR%</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ACE</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">CLUTCH</th>
+      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ZERADO</th>
+      <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ÚLTIMAS 5</th>
+    </tr></thead>
+    <tbody>${ord.map((s,i)=>{
+      if(s.partidas===0)return`<tr style="opacity:0.35;border-bottom:1px solid rgba(255,170,0,0.04);">
+        <td style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">—</td>
+        <td style="padding:10px 8px;font-weight:700;letter-spacing:1px;">${s.nome}</td>
+        <td colspan="12" style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);text-align:center;">sem partidas registradas</td></tr>`;
+      const mediaColor=s.media>0?'var(--green)':s.media<0?'var(--red)':'var(--muted)';
+      const kmd=s.partidas>0?(s.kills/s.partidas).toFixed(1):0;
+      const wrP=s.partidas>0?Math.round(s.vitorias/s.partidas*100):0;
+      const bW=Math.round((Math.abs(s.media)/maxMedia)*80);
+      const podium=i===0?'◆':i===1?'②':i===2?'③':i+1;
+      const podiumColor=i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--muted)';
+      const ultimas5=s.ptsHistorico.slice(-5).map(p=>`<span style="display:inline-block;width:16px;height:16px;border-radius:2px;font-size:8px;line-height:16px;text-align:center;font-family:'Share Tech Mono',monospace;background:${p>0?'rgba(46,204,113,0.15)':p<0?'rgba(232,50,26,0.15)':'rgba(255,255,255,0.05)'};color:${p>0?'var(--green)':p<0?'var(--red)':'var(--muted)'};">${p>0?'+'+p:p}</span>`).join('');
+      return`<tr style="background:${i===0?'rgba(255,170,0,0.03)':i%2===0?'':'rgba(255,255,255,0.01)'};border-bottom:1px solid rgba(255,170,0,0.04);">
+        <td style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:13px;color:${podiumColor};font-weight:700;">${podium}</td>
+        <td style="padding:10px 8px;">
+          <div style="font-weight:700;font-size:13px;letter-spacing:1px;${i===0?'color:var(--gold);':''}">${s.nome}</div>
+          <div style="margin-top:3px;height:2px;background:rgba(255,255,255,0.05);border-radius:1px;width:80px;">
+            <div style="height:2px;border-radius:1px;width:${bW}%;background:${s.media>=0?'var(--gold)':'var(--red)'};"></div>
+          </div>
+        </td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:16px;font-weight:700;color:${mediaColor};">${s.media>0?'+':''}${s.media}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);">${s.pts>0?'+':''}${s.pts}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">${s.partidas}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold);">${s.kills}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;">${s.assistencias}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;">${s.plants}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold);">${kmd}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${wrP>=50?'var(--green)':'var(--red)'};">${wrP}%</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.aces>0?'var(--gold)':'var(--muted)'};">${s.aces}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.clutches>0?'var(--blue)':'var(--muted)'};">${s.clutches}</td>
+        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.zeros>0?'var(--red)':'var(--muted)'};">${s.zeros}x</td>
+        <td style="padding:10px 8px;">${ultimas5}</td></tr>`;
+    }).join('')}</tbody></table>`;
+  container.innerHTML=html;
+}
+
+// ============ RESTO DAS FUNÇÕES (mantidas) ============
 function renderJogadoresGrid(){
   document.getElementById('jogadores-grid').innerHTML=TODOS_JOGADORES.map(j=>
     `<div class="jogador-btn ${jogadorRef===j?'ativo':''}" onclick="selecionarRef('${j}')">${j}</div>`
@@ -364,21 +648,18 @@ async function buscarPartidas(){
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Buscando...';
   log(`Buscando partidas de ${jogadorRef}...`,'info');
   try {
-    const url = `https://api.tracker.gg/api/v2/r6siege/standard/matches/psn/${encodeURIComponent(jogadorRef)}?gamemode=pvp_ranked`;
-    const resp = await fetch(url,{credentials:'include',headers:{'Accept':'application/json','Referer':'https://r6.tracker.network/'}});
+    const url=`https://api.tracker.gg/api/v2/r6siege/standard/matches/psn/${encodeURIComponent(jogadorRef)}?gamemode=pvp_ranked`;
+    const resp=await fetch(url,{credentials:'include',headers:{'Accept':'application/json','Referer':'https://r6.tracker.network/'}});
     if(!resp.ok) throw new Error(`HTTP ${resp.status} — Abra o tracker.gg primeiro e faça login`);
-    const data = await resp.json();
-    const matches = data?.data?.matches || data?.data || [];
+    const data=await resp.json();
+    const matches=data?.data?.matches||data?.data||[];
     if(!matches.length){log('Nenhuma partida encontrada.','err');return;}
-    const estado = await getEstado();
-    const tsRegistrados = new Set((estado.partidas||[]).map(p=>p.ts_api).filter(Boolean));
-    const novas = matches.filter(m=>{
-      const ts = new Date(m.metadata?.timestamp||'').getTime();
-      return !tsRegistrados.has(ts);
-    });
-    const ocultadas = matches.length - novas.length;
+    const estado=await getEstado();
+    const tsRegistrados=new Set((estado.partidas||[]).map(p=>p.ts_api).filter(Boolean));
+    const novas=matches.filter(m=>{const ts=new Date(m.metadata?.timestamp||'').getTime();return !tsRegistrados.has(ts);});
+    const ocultadas=matches.length-novas.length;
     log(`${matches.length} partidas carregadas!${ocultadas>0?` (${ocultadas} já registradas ocultadas)`:''}`, 'ok');
-    partidasCache = matches;
+    partidasCache=matches;
     renderizarListaReal(novas.length>0?novas:matches);
     if(novas.length===0) log('Todas as partidas recentes já foram registradas.','info');
   } catch(e) {
@@ -424,18 +705,14 @@ function renderizarListaReal(matches){
       const stats=seg.stats||{};
       const mapa=meta.sessionMapName||meta.mapName||meta.map||'—';
       const tempo=formatarTempo(meta.timestamp||m.attributes?.startedAt);
-      const rWon=stats.roundsWon?.value||0;
-      const rLost=stats.roundsLost?.value||0;
+      const rWon=stats.roundsWon?.value||0, rLost=stats.roundsLost?.value||0;
       const won=rWon>rLost?true:(rWon<rLost?false:(stats.hasWon?.value??false));
-      const pc=won?'win':'loss';
-      const k=stats.kills?.value||0;
-      const a=stats.assists?.value||0;
-      const d2=stats.deaths?.value||0;
+      const k=stats.kills?.value||0, a=stats.assists?.value||0, d2=stats.deaths?.value||0;
       html+=`<div class="partida-row" id="pr_${idx}" onclick="selecionarPartidaReal(${idx})">
         <div class="pr-sel"><span class="pr-chk">✓</span></div>
         <div class="pr-mapa">${mapa}</div>
         <div class="pr-hora">${tempo}</div>
-        <div class="pr-placar ${pc}">${rWon}:${rLost}</div>
+        <div class="pr-placar ${won?'win':'loss'}">${rWon}:${rLost}</div>
         <div class="pr-squad"><span class="sq-pill sq-ref">${jogadorRef}</span><span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-left:6px;">${k}K / ${d2}D / ${a}A</span></div>
       </div>`;
     });
@@ -456,14 +733,12 @@ function selecionarPartidaReal(idx){
   const allSegs=m.segments||[];
   const refSeg=allSegs.find(s=>{const n=s.metadata?.platformUserHandle||s.metadata?.platformUserIdentifier||'';return n.toLowerCase()===jogadorRef.toLowerCase();})||allSegs[0];
   const stats0=refSeg?.stats||{};
-  const rW=stats0.roundsWon?.value||0;
-  const rL=stats0.roundsLost?.value||0;
+  const rW=stats0.roundsWon?.value||0, rL=stats0.roundsLost?.value||0;
   const won=rW>rL?true:rW<rL?false:(stats0.hasWon?.value??false);
   jogadoresPartida=[];
   allSegs.forEach(s=>{
     const nome=s.metadata?.platformUserHandle||s.metadata?.platformUserIdentifier||'';
-    if(!nome) return;
-    if(!TODOS_JOGADORES.some(j=>j.toLowerCase()===nome.toLowerCase())) return;
+    if(!nome||!TODOS_JOGADORES.some(j=>j.toLowerCase()===nome.toLowerCase())) return;
     const st=s.stats||{};
     jogadoresPartida.push({nome,kills:st.kills?.value||0,deaths:st.deaths?.value||0,assistencias:st.assists?.value||st.assistances?.value||0,plants:0,clutch:(st.clutches?.value||0)>0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
   });
@@ -579,11 +854,7 @@ function editarPontoManual(nome,ptsFinal,ptsAuto,el){
   input.type='number'; input.value=ptsFinal; input.step='0.5';
   input.style.cssText='width:65px;background:var(--surface2);border:1px solid var(--gold);color:var(--gold);font-family:"Share Tech Mono",monospace;font-size:20px;font-weight:700;padding:3px 5px;border-radius:2px;text-align:center;outline:none;';
   el.replaceWith(input); input.focus(); input.select();
-  const confirmar=()=>{
-    const novo=parseFloat(input.value);
-    if(!isNaN(novo)){novo===ptsAuto?delete pontosManual[nome]:pontosManual[nome]=novo;}
-    atualizarPrevia();
-  };
+  const confirmar=()=>{const novo=parseFloat(input.value);if(!isNaN(novo)){novo===ptsAuto?delete pontosManual[nome]:pontosManual[nome]=novo;}atualizarPrevia();};
   input.addEventListener('blur',confirmar);
   input.addEventListener('keydown',e=>{if(e.key==='Enter')input.blur();if(e.key==='Escape'){delete pontosManual[nome];atualizarPrevia();}});
 }
@@ -811,7 +1082,17 @@ async function renderizarHistorico(){
 }
 
 function log(msg,tipo=''){const box=document.getElementById('log-box');const now=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});const s=document.createElement('span');s.className=tipo?'log-'+tipo:'';s.innerHTML=`<br>[${now}] ${msg}`;box.appendChild(s);box.scrollTop=box.scrollHeight;}
-function abrirModal(tipo,idx){modalAcao=tipo;modalParam=idx;const t=document.getElementById('modal-title'),b=document.getElementById('modal-body'),btn=document.getElementById('modal-btn');if(tipo==='tudo'){t.textContent='Apagar tudo';b.textContent='Apagar TODO o histórico?';btn.textContent='Apagar tudo';}else{t.textContent='Apagar partida';b.textContent='Apagar esta partida?';btn.textContent='Apagar';}btn.onclick=executarModal;document.getElementById('modal-wrap').classList.add('show');}
+
+function abrirModal(tipo,idx){
+  modalAcao=tipo;modalParam=idx;
+  const t=document.getElementById('modal-title'),b=document.getElementById('modal-body'),btn=document.getElementById('modal-btn');
+  document.getElementById('modal-input').style.display='none';
+  if(tipo==='tudo'){t.textContent='Apagar tudo';b.textContent='Apagar TODO o histórico?';btn.textContent='Apagar tudo';}
+  else{t.textContent='Apagar partida';b.textContent='Apagar esta partida?';btn.textContent='Apagar';}
+  btn.className='btn btn-sm btn-red';
+  btn.onclick=executarModal;
+  document.getElementById('modal-wrap').classList.add('show');
+}
 function fecharModal(){document.getElementById('modal-wrap').classList.remove('show');}
 function toggleEdit(idx){const el=document.getElementById('edit-hist-'+idx);if(el)el.style.display=el.style.display==='none'?'block':'none';}
 
@@ -842,94 +1123,27 @@ async function salvarEdicaoHistorico(idx){
   log('Partida editada e pontos recalculados!','ok');
 }
 
-async function executarModal(){if(modalAcao==='tudo'){await salvarEstado({partidas:[]});}else if(modalAcao==='partida'&&modalParam!==null){const e=await getEstado();e.partidas.splice(modalParam,1);await salvarEstado(e);}fecharModal();renderizarRanking();renderizarHistorico();}
+async function executarModal(){
+  if(modalAcao==='tudo'){await salvarEstado({partidas:[],temporadas:(await getEstado()).temporadas||[]});}
+  else if(modalAcao==='partida'&&modalParam!==null){const e=await getEstado();e.partidas.splice(modalParam,1);await salvarEstado(e);}
+  fecharModal();renderizarRanking();renderizarHistorico();
+}
 
-function trocarAba(aba,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+aba).classList.add('active');el.classList.add('active');if(aba==='ranking')renderizarRanking();if(aba==='historico')renderizarHistorico();if(aba==='resumo')gerarResumo();if(aba==='classificacao')renderizarClassificacao();}
-
-async function renderizarClassificacao(){
-  const estado=await getEstado();const partidas=estado.partidas||[];
-  const container=document.getElementById('class-content');
-  if(!partidas.length){container.innerHTML='<div class="empty-state">// Nenhuma partida registrada ainda.<br><br>Registre partidas na aba Sessão para ver a classificação geral.</div>';return;}
-  const stats={};
-  TODOS_JOGADORES.forEach(j=>{stats[j]={nome:j,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};});
-  partidas.forEach(p=>{p.pontuacoes.forEach(s=>{
-    if(!stats[s.nome])stats[s.nome]={nome:s.nome,pts:0,kills:0,assistencias:0,plants:0,clutches:0,aces:0,zeros:0,vitorias:0,derrotas:0,partidas:0,ptsHistorico:[]};
-    const t=stats[s.nome];
-    t.pts+=s.pts;t.kills+=s.kills||0;t.assistencias+=s.assistencias||0;t.plants+=s.plants||0;
-    t.clutches+=s.clutch?1:0;t.aces+=s.ace?1:0;t.zeros+=s.kills===0?1:0;
-    t.vitorias+=p.resultado==='vitoria'?1:0;t.derrotas+=p.resultado==='derrota'?1:0;t.partidas++;t.ptsHistorico.push(s.pts);
-  });});
-  const ord=Object.values(stats).sort((a,b)=>{if(a.partidas===0&&b.partidas===0)return 0;if(a.partidas===0)return 1;if(b.partidas===0)return -1;return b.pts-a.pts;});
-  const maxPts=Math.max(...ord.filter(s=>s.partidas>0).map(s=>Math.abs(s.pts)),1);
-  const totalPartidas=partidas.length,totalVitorias=partidas.filter(p=>p.resultado==='vitoria').length;
-  const wr=Math.round(totalVitorias/totalPartidas*100);
-  let html=`<div style="margin-bottom:20px;">
-    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:12px;">CLASSIFICAÇÃO GERAL — TODOS OS TEMPOS</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
-      <div class="ns-card"><div class="ns-label">Partidas</div><div class="ns-val">${totalPartidas}</div></div>
-      <div class="ns-card"><div class="ns-label">Vitórias</div><div class="ns-val green">${totalVitorias}</div></div>
-      <div class="ns-card"><div class="ns-label">Derrotas</div><div class="ns-val red">${totalPartidas-totalVitorias}</div></div>
-      <div class="ns-card"><div class="ns-label">WR%</div><div class="ns-val ${wr>=50?'green':'red'}">${wr}%</div></div>
-    </div></div>
-  <table style="width:100%;border-collapse:collapse;font-size:12px;">
-    <thead><tr style="border-bottom:1px solid var(--border);">
-      <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">#</th>
-      <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">JOGADOR</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">PTS</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">JOGOS</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">K</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">A</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">P</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">KMD</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">WR%</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ACE</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">CLUTCH</th>
-      <th style="padding:8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ZERADO</th>
-      <th style="padding:8px;text-align:left;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:400;">ÚLTIMAS 5</th>
-    </tr></thead>
-    <tbody>${ord.map((s,i)=>{
-      if(s.partidas===0)return`<tr style="opacity:0.35;border-bottom:1px solid rgba(255,170,0,0.04);">
-        <td style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">—</td>
-        <td style="padding:10px 8px;font-weight:700;letter-spacing:1px;">${s.nome}</td>
-        <td colspan="11" style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);text-align:center;">sem partidas registradas</td></tr>`;
-      const cls=s.pts>0?'var(--green)':s.pts<0?'var(--red)':'var(--muted)';
-      const kmd=s.partidas>0?(s.kills/s.partidas).toFixed(1):0;
-      const wrP=s.partidas>0?Math.round(s.vitorias/s.partidas*100):0;
-      const bW=Math.round((Math.abs(s.pts)/maxPts)*80);
-      const podium=i===0?'◆':i===1?'②':i===2?'③':i+1;
-      const podiumColor=i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--muted)';
-      const ultimas5=s.ptsHistorico.slice(-5).map(p=>`<span style="display:inline-block;width:16px;height:16px;border-radius:2px;font-size:8px;line-height:16px;text-align:center;font-family:'Share Tech Mono',monospace;background:${p>0?'rgba(46,204,113,0.15)':p<0?'rgba(232,50,26,0.15)':'rgba(255,255,255,0.05)'};color:${p>0?'var(--green)':p<0?'var(--red)':'var(--muted)'};">${p>0?'+'+p:p}</span>`).join('');
-      return`<tr style="background:${i===0?'rgba(255,170,0,0.03)':i%2===0?'':'rgba(255,255,255,0.01)'};border-bottom:1px solid rgba(255,170,0,0.04);">
-        <td style="padding:10px 8px;font-family:'Share Tech Mono',monospace;font-size:13px;color:${podiumColor};font-weight:700;">${podium}</td>
-        <td style="padding:10px 8px;"><div style="font-weight:700;font-size:13px;letter-spacing:1px;${i===0?'color:var(--gold);':''}">${s.nome}</div>
-          <div style="margin-top:3px;height:2px;background:rgba(255,255,255,0.05);border-radius:1px;width:80px;"><div style="height:2px;border-radius:1px;width:${bW}%;background:${s.pts>=0?'var(--gold)':'var(--red)'};"></div></div></td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:16px;font-weight:700;color:${cls};">${s.pts>0?'+':''}${s.pts}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">${s.partidas}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold);">${s.kills}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;">${s.assistencias}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;">${s.plants}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--gold);">${kmd}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${wrP>=50?'var(--green)':'var(--red)'};">${wrP}%</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.aces>0?'var(--gold)':'var(--muted)'};">${s.aces}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.clutches>0?'var(--blue)':'var(--muted)'};">${s.clutches}</td>
-        <td style="padding:10px 8px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:12px;color:${s.zeros>0?'var(--red)':'var(--muted)'};">${s.zeros}x</td>
-        <td style="padding:10px 8px;">${ultimas5}</td></tr>`;
-    }).join('')}</tbody></table>`;
-  container.innerHTML=html;
+function trocarAba(aba,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+aba).classList.add('active');
+  el.classList.add('active');
+  if(aba==='ranking')renderizarRanking();
+  if(aba==='historico')renderizarHistorico();
+  if(aba==='resumo')gerarResumo();
+  if(aba==='classificacao')renderizarClassificacao();
+  if(aba==='temporadas')renderizarTemporadas();
 }
 
 renderJogadoresGrid();
 renderizarRanking();
 renderizarHistorico();
-(async()=>{
-  try{
-    const local=localStorage.getItem('r6_imb10');
-    if(local){const d=JSON.parse(local);
-      if(d.partidas?.length>0){const srv=await getEstado();
-        if(srv.partidas.length===0){await salvarEstado(d);log('Dados migrados do localStorage!','ok');renderizarRanking();renderizarHistorico();}
-        localStorage.removeItem('r6_imb10');}}
-  }catch(e){}
-})();
 </script>
 </body>
 </html>
