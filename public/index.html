@@ -206,6 +206,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
     <button class="tab" onclick="trocarAba('historico',this)">Histórico</button>
     <button class="tab" onclick="trocarAba('resumo',this)">Resumo da Noite</button>
     <button class="tab" onclick="trocarAba('temporadas',this)">Temporadas</button>
+    <button class="tab" onclick="trocarAba('manual',this)">✏ Manual</button>
   </div>
 
   <div class="panel active" id="panel-sessao">
@@ -288,6 +289,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
     <div id="resumo-content"><div class="empty-state">// Selecione uma data para ver o resumo da noite</div></div>
   </div>
   <div class="panel" id="panel-temporadas"><div id="temporadas-content"></div></div>
+  <div class="panel" id="panel-manual"><div id="manual-content"></div></div>
 </div>
 
 <div class="modal-wrap" id="modal-wrap">
@@ -1139,6 +1141,7 @@ function trocarAba(aba,el){
   if(aba==='resumo')gerarResumo();
   if(aba==='classificacao')renderizarClassificacao();
   if(aba==='temporadas')renderizarTemporadas();
+  if(aba==='manual')renderizarManual();
 }
 
 renderJogadoresGrid();
@@ -1147,3 +1150,220 @@ renderizarHistorico();
 </script>
 </body>
 </html>
+<script>
+// ============ REGISTRO MANUAL ============
+const MAPAS = ['Bank','Border','Chalet','Clubhouse','Coastline','Consulate','Emerald Plains','Fortress','Kanal','Kafe Dostoyevsky','Lair','Nighthaven Labs','Oregon','Outback','Skyscraper','Theme Park','Villa'];
+
+let jogadoresSelecionados = [];
+let manualAutorizado = false;
+const SENHA_MANUAL = 'coroa';
+
+function renderizarManual() {
+  const container = document.getElementById('manual-content');
+  const hoje2 = new Date().toISOString().split('T')[0];
+
+  if(!manualAutorizado) {
+    container.innerHTML = `
+      <div style="max-width:340px;margin:40px auto;text-align:center;">
+        <div style="font-size:32px;margin-bottom:16px;">🔐</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:20px;">ACESSO RESTRITO · MEMBROS IMB</div>
+        <div class="ref-box">
+          <div class="section-label" style="margin-bottom:8px;">Digite a senha para continuar</div>
+          <input type="password" id="senha-manual" class="modal-input" placeholder="••••••" 
+                 style="text-align:center;font-size:18px;letter-spacing:4px;"
+                 onkeydown="if(event.key==='Enter')verificarSenhaManual()"/>
+          <button class="btn btn-green" style="width:100%;margin-top:8px;" onclick="verificarSenhaManual()">Entrar</button>
+          <div id="senha-erro" style="display:none;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--red);margin-top:8px;">// Senha incorreta</div>
+        </div>
+      </div>`;
+    setTimeout(()=>document.getElementById('senha-manual')?.focus(), 100);
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;">REGISTRAR PARTIDA MANUALMENTE</div>
+        <button class="btn btn-sm btn-red" onclick="manualAutorizado=false;renderizarManual()">🔒 Sair</button>
+      </div>
+      <div class="ref-box">
+        <div class="ref-title">Informações da partida</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;">
+          <div>
+            <div class="section-label" style="margin-bottom:5px;">Mapa</div>
+            <select class="result-select" id="manual-mapa">
+              ${MAPAS.map(m=>`<option value="${m}">${m}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <div class="section-label" style="margin-bottom:5px;">Resultado</div>
+            <select class="result-select" id="manual-resultado">
+              <option value="vitoria">Vitória</option>
+              <option value="derrota">Derrota</option>
+            </select>
+          </div>
+          <div>
+            <div class="section-label" style="margin-bottom:5px;">Data</div>
+            <input type="date" id="manual-data" class="result-select" value="${hoje2}"/>
+          </div>
+        </div>
+
+        <div class="section-label">Selecione os jogadores que participaram</div>
+        <div class="jogadores-grid" id="manual-jogadores-grid">
+          ${TODOS_JOGADORES.map(j=>`
+            <div class="jogador-btn ${jogadoresSelecionados.includes(j)?'ativo':''}" 
+                 id="mjbtn_${j.replace(/[^a-zA-Z0-9]/g,'_')}"
+                 onclick="toggleJogadorManual('${j}')">
+              ${j}
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div id="manual-tabela-wrap" style="${jogadoresSelecionados.length>0?'':'display:none;'}">
+        <div class="section-label">Dados dos jogadores</div>
+        <table class="edit-table" style="margin-bottom:14px;">
+          <thead>
+            <tr>
+              <th>Jogador</th>
+              <th>Kills</th>
+              <th>Assists</th>
+              <th>Plants<span class="manual-tag">manual</span></th>
+              <th>Clutch</th>
+              <th>Ace</th>
+              <th>TK</th>
+            </tr>
+          </thead>
+          <tbody id="manual-tbody">
+            ${jogadoresSelecionados.map((j,i)=>`
+              <tr class="${i%2===0?'hl-row':''}">
+                <td style="font-weight:700;font-size:12px;letter-spacing:1px;">${j}</td>
+                <td><input type="number" min="0" max="99" value="0" id="mk_${i}" onchange="atualizarPreviaManual()"/></td>
+                <td><input type="number" min="0" max="99" value="0" id="ma_${i}" onchange="atualizarPreviaManual()"/></td>
+                <td><input type="number" min="0" max="20" value="0" id="mpl_${i}" onchange="atualizarPreviaManual()"/></td>
+                <td style="text-align:center"><input type="checkbox" id="mcl_${i}" onchange="atualizarPreviaManual()"/></td>
+                <td style="text-align:center"><input type="checkbox" id="mac_${i}" onchange="atualizarPreviaManual()"/></td>
+                <td><input type="number" min="0" max="5" value="0" id="mtk_${i}" onchange="atualizarPreviaManual()"/></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+
+        <div class="section-label">Pré-visualização dos pontos <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);font-weight:400;letter-spacing:1px;">— clique nos pontos para editar</span></div>
+        <div class="score-grid" id="manual-score-grid"></div>
+
+        <div style="margin-top:16px;display:flex;gap:10px;">
+          <button class="btn btn-green" onclick="registrarPartidaManual()">Registrar Partida</button>
+          <button class="btn btn-sm btn-red" onclick="limparManual()">Limpar</button>
+        </div>
+      </div>
+    </div>`;
+
+  atualizarPreviaManual();
+}
+
+function toggleJogadorManual(nome) {
+  if(jogadoresSelecionados.includes(nome)) {
+    jogadoresSelecionados = jogadoresSelecionados.filter(j=>j!==nome);
+  } else {
+    jogadoresSelecionados.push(nome);
+  }
+  renderizarManual();
+}
+
+const pontosManualM = {};
+
+function atualizarPreviaManual() {
+  if(!jogadoresSelecionados.length) return;
+  const jogadores = jogadoresSelecionados.map((j,i) => ({
+    nome: j,
+    kills: parseInt(document.getElementById(`mk_${i}`)?.value||0),
+    assistencias: parseInt(document.getElementById(`ma_${i}`)?.value||0),
+    plants: parseInt(document.getElementById(`mpl_${i}`)?.value||0),
+    clutch: document.getElementById(`mcl_${i}`)?.checked||false,
+    ace: document.getElementById(`mac_${i}`)?.checked||false,
+    teamkills: parseInt(document.getElementById(`mtk_${i}`)?.value||0),
+  }));
+  const grid = document.getElementById('manual-score-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  jogadores.forEach(j => {
+    const{pts,det} = calcPontos(j, jogadores);
+    const ptsFinal = pontosManualM[j.nome] !== undefined ? pontosManualM[j.nome] : pts;
+    const cls = ptsFinal>0?'pos':ptsFinal<0?'neg':'zero';
+    const foiEditado = pontosManualM[j.nome] !== undefined;
+    const div = document.createElement('div'); div.className='sc';
+    div.style.cssText = foiEditado?'border-color:rgba(255,170,0,0.5);':'';
+    div.innerHTML=`<div class="sc-name">${j.nome}</div>
+      <div class="sc-pts ${cls}" style="cursor:pointer;transition:opacity 0.15s;" title="Clique para editar"
+           onmouseenter="this.style.opacity='0.7'" onmouseleave="this.style.opacity='1'"
+           onclick="editarPontoManualM('${j.nome}',${ptsFinal},${pts},this)">
+        ${ptsFinal>0?'+':''}${ptsFinal}
+      </div>
+      <div class="sc-det">${det.join('<br>')||'— sem pontos'}${foiEditado?`<br><span style="color:var(--gold);font-size:9px;">✎ ${ptsFinal>0?'+':''}${ptsFinal} manual</span>`:''}</div>`;
+    grid.appendChild(div);
+  });
+}
+
+function editarPontoManualM(nome,ptsFinal,ptsAuto,el){
+  const input=document.createElement('input');
+  input.type='number'; input.value=ptsFinal; input.step='0.5';
+  input.style.cssText='width:65px;background:var(--surface2);border:1px solid var(--gold);color:var(--gold);font-family:"Share Tech Mono",monospace;font-size:20px;font-weight:700;padding:3px 5px;border-radius:2px;text-align:center;outline:none;';
+  el.replaceWith(input); input.focus(); input.select();
+  const confirmar=()=>{const novo=parseFloat(input.value);if(!isNaN(novo)){novo===ptsAuto?delete pontosManualM[nome]:pontosManualM[nome]=novo;}atualizarPreviaManual();};
+  input.addEventListener('blur',confirmar);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')input.blur();if(e.key==='Escape'){delete pontosManualM[nome];atualizarPreviaManual();}});
+}
+
+function verificarSenhaManual() {
+  const senha = document.getElementById("senha-manual")?.value;
+  if(senha === SENHA_MANUAL) {
+    manualAutorizado = true;
+    renderizarManual();
+  } else {
+    document.getElementById("senha-erro").style.display = "block";
+    document.getElementById("senha-manual").value = "";
+    document.getElementById("senha-manual").focus();
+  }
+}
+
+async function registrarPartidaManual() {
+  if(!jogadoresSelecionados.length) { alert('Selecione pelo menos 1 jogador!'); return; }
+  const mapa = document.getElementById('manual-mapa').value;
+  const resultado = document.getElementById('manual-resultado').value;
+  const data = document.getElementById('manual-data').value;
+
+  const jogadores = jogadoresSelecionados.map((j,i) => ({
+    nome: j,
+    kills: parseInt(document.getElementById(`mk_${i}`)?.value||0),
+    assistencias: parseInt(document.getElementById(`ma_${i}`)?.value||0),
+    plants: parseInt(document.getElementById(`mpl_${i}`)?.value||0),
+    clutch: document.getElementById(`mcl_${i}`)?.checked||false,
+    ace: document.getElementById(`mac_${i}`)?.checked||false,
+    teamkills: parseInt(document.getElementById(`mtk_${i}`)?.value||0),
+  }));
+
+  const pontuacoes = jogadores.map(j => {
+    const{pts,det} = calcPontos(j, jogadores);
+    const ptsFinal = pontosManualM[j.nome] !== undefined ? pontosManualM[j.nome] : pts;
+    const detFinal = pontosManualM[j.nome] !== undefined ? [...det, '✎ ajuste manual'] : det;
+    return {nome:j.nome,kills:j.kills,deaths:0,assistencias:j.assistencias,plants:j.plants,clutch:!!j.clutch,ace:!!j.ace,teamkills:j.teamkills,pts:ptsFinal,det:detFinal};
+  });
+
+  const estado = await getEstado();
+  if(!estado.partidas) estado.partidas = [];
+  estado.partidas.push({data, mapa, resultado, pontuacoes, ts:Date.now(), ts_api:null});
+  await salvarEstado(estado);
+
+  // Limpar
+  Object.keys(pontosManualM).forEach(k=>delete pontosManualM[k]);
+  jogadoresSelecionados = [];
+  renderizarManual();
+
+  alert(`✓ Partida de ${mapa} registrada!`);
+}
+
+function limparManual() {
+  Object.keys(pontosManualM).forEach(k=>delete pontosManualM[k]);
+  jogadoresSelecionados = [];
+  renderizarManual();
+}
+</script>
