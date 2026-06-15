@@ -1037,7 +1037,15 @@ async function renderizarHistorico(){
     const ontemDate=new Date();ontemDate.setDate(ontemDate.getDate()-1);
     let ds='—';
     if(pData){if(pData.toDateString()===new Date().toDateString())ds='Hoje';else if(pData.toDateString()===ontemDate.toDateString())ds='Ontem';else ds=pData.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});}
-    const pills=p.pontuacoes.map(s=>{const cls=s.pts>0?'pill-pos':s.pts<0?'pill-neg':'pill-zero';return`<span class="pill ${cls}">${s.nome} ${s.pts>0?'+':''}${s.pts}</span>`;}).join('');
+    const pills=p.pontuacoes.map(s=>{
+      const cls=s.pts>0?'pill-pos':s.pts<0?'pill-neg':'pill-zero';
+      const det=(s.det||[]).filter(d=>d!=='✎ ajuste manual');
+      const detHtml=det.length>0?`<div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);margin-top:3px;line-height:1.6;">${det.map(d=>`<span style="color:${d.startsWith('-')?'var(--red)':'var(--green)'};">${d}</span>`).join(' · ')}</div>`:'';
+      return`<div style="display:inline-flex;flex-direction:column;margin:2px 4px 2px 0;vertical-align:top;">
+        <span class="pill ${cls}">${s.nome} ${s.pts>0?'+':''}${s.pts}</span>
+        ${detHtml}
+      </div>`;
+    }).join('');
     return`<div class="match-card" style="border:1px solid ${isWin?'rgba(46,204,113,0.25)':'rgba(232,50,26,0.3)'};border-left:3px solid ${isWin?'var(--green)':'var(--red)'}">
       <div class="match-header">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -1071,7 +1079,7 @@ async function renderizarHistorico(){
           <tbody>${(p.pontuacoes||[]).map((s,si)=>`<tr>
             <td style="padding:4px 8px;font-weight:600;">${s.nome}</td>
             <td style="text-align:center;padding:4px 8px;"><input type="number" min="0" max="20" value="${s.plants||0}" id="ep-${idx}-${si}" style="width:45px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:2px 4px;border-radius:2px;text-align:center;"></td>
-            <td style="text-align:center;padding:4px 8px;"><input type="checkbox" ${s.clutch?'checked':''} id="ec-${idx}-${si}" style="accent-color:var(--gold);width:14px;height:14px;"></td>
+            <td style="text-align:center;padding:4px 8px;"><input type="number" min="0" max="10" value="${s.clutch||0}" id="ec-${idx}-${si}" style="width:45px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:2px 4px;border-radius:2px;text-align:center;"></td>
             <td style="text-align:center;padding:4px 8px;"><input type="checkbox" ${s.ace?'checked':''} id="ea-${idx}-${si}" style="accent-color:var(--gold);width:14px;height:14px;"></td>
             <td style="text-align:center;padding:4px 8px;"><input type="number" min="0" max="5" value="${s.teamkills||0}" id="et-${idx}-${si}" style="width:45px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:2px 4px;border-radius:2px;text-align:center;"></td>
           </tr>`).join('')}</tbody>
@@ -1107,7 +1115,7 @@ async function salvarEdicaoHistorico(idx){
   const pontuacoes=estado.partidas[idx].pontuacoes||[];
   pontuacoes.forEach((s,si)=>{
     const plants=parseInt(document.getElementById(`ep-${idx}-${si}`)?.value||0);
-    const clutch=document.getElementById(`ec-${idx}-${si}`)?.checked||false;
+    const clutch=parseInt(document.getElementById(`ec-${idx}-${si}`)?.value||0);
     const ace=document.getElementById(`ea-${idx}-${si}`)?.checked||false;
     const tk=parseInt(document.getElementById(`et-${idx}-${si}`)?.value||0);
     s.plants=plants;s.clutch=clutch;s.ace=ace;s.teamkills=tk;

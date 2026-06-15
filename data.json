@@ -3390,14 +3390,14 @@
           "kills": 9,
           "deaths": 4,
           "assistencias": 2,
-          "plants": 1,
+          "plants": 3,
           "clutch": true,
           "ace": false,
           "teamkills": 0,
-          "pts": 3,
+          "pts": 5,
           "det": [
             "+2 (clutch)",
-            "+1 (plants)"
+            "+3 (plants)"
           ]
         }
       ],
