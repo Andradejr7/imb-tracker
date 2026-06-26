@@ -776,7 +776,7 @@ async function buscarSquadDaPartida(matchRef,matchIdx,dataPartida,mapa,won,rW,rL
   const matchTime=new Date(matchTimestamp).getTime();
   const MARGEM=5*60*1000;
   const squadEncontrado=[...jogadoresPartida];
-  const outrosJogadores=TODOS_JOGADORES.filter(j=>j.toLowerCase()!==jogadorRef.toLowerCase());
+  const outrosJogadores=[...TODOS_JOGADORES, ...Object.keys(MAPEAMENTO_CONTAS)].filter(j=>j.toLowerCase()!==jogadorRef.toLowerCase());
   for(const jogador of outrosJogadores){
     try{
       await new Promise(r=>setTimeout(r,600));
