@@ -3337,7 +3337,7 @@
           "deaths": 9,
           "assistencias": 5,
           "plants": 0,
-          "clutch": false,
+          "clutch": 0,
           "ace": false,
           "teamkills": 0,
           "pts": 0.5,
@@ -3351,7 +3351,7 @@
           "deaths": 6,
           "assistencias": 2,
           "plants": 1,
-          "clutch": false,
+          "clutch": 0,
           "ace": false,
           "teamkills": 0,
           "pts": 3,
@@ -3367,7 +3367,7 @@
           "deaths": 7,
           "assistencias": 2,
           "plants": 0,
-          "clutch": false,
+          "clutch": 0,
           "ace": false,
           "teamkills": 0,
           "pts": 0,
@@ -3379,7 +3379,7 @@
           "deaths": 7,
           "assistencias": 3,
           "plants": 0,
-          "clutch": false,
+          "clutch": 0,
           "ace": false,
           "teamkills": 0,
           "pts": 0,
@@ -3390,14 +3390,14 @@
           "kills": 9,
           "deaths": 4,
           "assistencias": 2,
-          "plants": 3,
-          "clutch": true,
+          "plants": 1,
+          "clutch": 2,
           "ace": false,
           "teamkills": 0,
           "pts": 5,
           "det": [
-            "+2 (clutch)",
-            "+3 (plants)"
+            "+4 (clutch)",
+            "+1 (plants)"
           ]
         }
       ],
@@ -3713,6 +3713,2286 @@
       ],
       "ts": 1781477101777,
       "ts_api": 1781476770327
+    },
+    {
+      "data": "2026-06-16",
+      "mapa": "Fortress",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 1,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        }
+      ],
+      "ts": 1781729726142,
+      "ts_api": 1781647189352
+    },
+    {
+      "data": "2026-06-16",
+      "mapa": "Bank",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 7,
+          "deaths": 7,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        }
+      ],
+      "ts": 1781729740071,
+      "ts_api": 1781649920862
+    },
+    {
+      "data": "2026-06-16",
+      "mapa": "Emerald Plains",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 8,
+          "deaths": 2,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 2,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 6,
+          "deaths": 3,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        }
+      ],
+      "ts": 1781729755318,
+      "ts_api": 1781651748533
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Coastline",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 8,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 7,
+          "deaths": 3,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 2,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 4,
+          "det": [
+            "+4 (clutch)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 10,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (10+ kills)",
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 1,
+          "deaths": 8,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 2,
+          "deaths": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781740833692,
+      "ts_api": 1781734109159
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Chalet",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 7,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 2,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781740857115,
+      "ts_api": 1781737539757
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Emerald Plains",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 2,
+          "deaths": 8,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 5,
+          "deaths": 4,
+          "assistencias": 2,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 6,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 3,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 7,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781741159073,
+      "ts_api": 1781740693973
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Calypso Casino",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 7,
+          "deaths": 4,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        }
+      ],
+      "ts": 1781743576288,
+      "ts_api": 1781742764673
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Kafe Dostoyevsky",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 6,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 2,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 4,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 4,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        }
+      ],
+      "ts": 1781744681169,
+      "ts_api": 1781744436337
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Calypso Casino",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 13,
+          "deaths": 4,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (10+ kills)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 2,
+          "deaths": 5,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 7,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 5,
+          "deaths": 4,
+          "assistencias": 5,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781747279520,
+      "ts_api": 1781747099534
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Calypso Casino",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 3,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 1,
+          "deaths": 4,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781748859793,
+      "ts_api": 1781748701873
+    },
+    {
+      "data": "2026-06-17",
+      "mapa": "Consulate",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 6,
+          "deaths": 7,
+          "assistencias": 4,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 4,
+          "deaths": 7,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 10,
+          "deaths": 7,
+          "assistencias": 3,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (10+ kills)",
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 6,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781751671369,
+      "ts_api": 1781751253097
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Coastline",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 6,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 0,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 3,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2.5,
+          "det": [
+            "+2 (clutch)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781889360303,
+      "ts_api": 1781816726205
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Chalet",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 5,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781889374943,
+      "ts_api": 1781818666598
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Clubhouse",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 2,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 3,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 12,
+          "deaths": 1,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 4,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)",
+            "+1 (10+ kills)"
+          ]
+        }
+      ],
+      "ts": 1781889388655,
+      "ts_api": 1781820619382
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Consulate",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 8,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 5,
+          "deaths": 7,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 6,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 3,
+          "deaths": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 7,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781889410103,
+      "ts_api": 1781823558066
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Outback",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 4,
+          "deaths": 3,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2,
+          "det": [
+            "+2 (clutch)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 3,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 8,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 7,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 15,
+          "deaths": 6,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2.5,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (10+ kills)",
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781889422623,
+      "ts_api": 1781827385665
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Clubhouse",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 9,
+          "deaths": 2,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 0.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 2,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 2,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 2,
+          "deaths": 1,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781889432023,
+      "ts_api": 1781828740937
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Fortress",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 0,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -0.5,
+          "det": [
+            "+0.5 (mais assists)",
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1781889441831,
+      "ts_api": 1781830425840
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Oregon",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 5,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 2,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 2,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781889453767,
+      "ts_api": 1781833026871
+    },
+    {
+      "data": "2026-06-18",
+      "mapa": "Coastline",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 7,
+          "deaths": 1,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 4,
+          "deaths": 0,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gabkill",
+          "kills": 4,
+          "deaths": 1,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Dvk-",
+          "kills": 3,
+          "deaths": 3,
+          "assistencias": 5,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1781889463935,
+      "ts_api": 1781834445026
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Oregon",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_VnC",
+          "kills": 7,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_And-",
+          "kills": 7,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 3,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1782085816136,
+      "ts_api": 1782081227121
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Calypso Casino",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 6,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 6,
+          "deaths": 7,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 8,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 3,
+          "deaths": 6,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1782085832906,
+      "ts_api": 1782083902919
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Border",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 0,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 3,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 8,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1782085848427,
+      "ts_api": 1782085638789
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Oregon",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 9,
+          "deaths": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 3,
+          "deaths": 8,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 8,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 0,
+          "det": [
+            "+1 (plants)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 3,
+          "deaths": 6,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1782089489601,
+      "ts_api": 1782088494067
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Calypso Casino",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 6,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 5,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 1,
+          "deaths": 4,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 12,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (10+ kills)"
+          ]
+        }
+      ],
+      "ts": 1782092546592,
+      "ts_api": 1782090385277
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Calypso Casino",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 7,
+          "deaths": 3,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 5,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 6,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 1,
+          "deaths": 4,
+          "assistencias": 3,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1782092578297,
+      "ts_api": 1782092440278
+    },
+    {
+      "data": "2026-06-21",
+      "mapa": "Coastline",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 9,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 6,
+          "deaths": 3,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 3,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1782094706051,
+      "ts_api": 1782094516837
+    },
+    {
+      "data": "2026-06-24",
+      "mapa": "Chalet",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 3,
+          "deaths": 6,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 0,
+          "deaths": 6,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 6,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)"
+          ]
+        }
+      ],
+      "ts": 1782401292579,
+      "ts_api": 1782349997066
+    },
+    {
+      "data": "2026-06-24",
+      "mapa": "Calypso Casino",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 1,
+          "deaths": 4,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 1,
+          "deaths": 3,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 3,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1782401305986,
+      "ts_api": 1782351663461
+    },
+    {
+      "data": "2026-06-24",
+      "mapa": "Bank",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 5,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 0,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 8,
+          "deaths": 4,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 2,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1782401318482,
+      "ts_api": 1782353688681
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Kafe Dostoyevsky",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 6,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Gust",
+          "kills": 6,
+          "deaths": 5,
+          "assistencias": 4,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_VnC",
+          "kills": 8,
+          "deaths": 3,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 0,
+          "deaths": 7,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": -1,
+          "det": [
+            "-1 (zerado)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 8,
+          "deaths": 6,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1782401345386,
+      "ts_api": 1782356738963
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Border",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2.5,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 5,
+          "deaths": 8,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (plants)",
+            "+0.5 (mais assists)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 3,
+          "deaths": 7,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        }
+      ],
+      "ts": 1782441371745,
+      "ts_api": 1782426744014
     }
   ],
   "temporadas": [

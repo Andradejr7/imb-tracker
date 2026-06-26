@@ -306,6 +306,11 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
 
 <script>
 const TODOS_JOGADORES = ['IMB_And-','IMB_Gust','IMB_VnC','IMB_Shell','IMB_Bimba','IMB_Gabkill','IMB_Bentoo','IMB_Dvk-'];
+// Contas alternativas: quando detectado o nome à esquerda, os pontos vão para o nome à direita
+const MAPEAMENTO_CONTAS = { 'IMB_Comidanamesa': 'IMB_Bimba' };
+function mapearConta(nome) {
+  return MAPEAMENTO_CONTAS[nome] || nome;
+}
 let jogadorRef = null, partidaSelecionada = null, jogadoresPartida = [];
 let modalAcao = null, modalParam = null;
 let partidasCache = [];
@@ -739,14 +744,18 @@ function selecionarPartidaReal(idx){
   const won=rW>rL?true:rW<rL?false:(stats0.hasWon?.value??false);
   jogadoresPartida=[];
   allSegs.forEach(s=>{
-    const nome=s.metadata?.platformUserHandle||s.metadata?.platformUserIdentifier||'';
-    if(!nome||!TODOS_JOGADORES.some(j=>j.toLowerCase()===nome.toLowerCase())) return;
+    const nomeOriginal=s.metadata?.platformUserHandle||s.metadata?.platformUserIdentifier||'';
+    if(!nomeOriginal) return;
+    const todosENomesMapeados = [...TODOS_JOGADORES, ...Object.keys(MAPEAMENTO_CONTAS)];
+    if(!todosENomesMapeados.some(j=>j.toLowerCase()===nomeOriginal.toLowerCase())) return;
+    const nome = mapearConta(nomeOriginal);
     const st=s.stats||{};
+    if(jogadoresPartida.some(j=>j.nome===nome)) return;
     jogadoresPartida.push({nome,kills:st.kills?.value||0,deaths:st.deaths?.value||0,assistencias:st.assists?.value||st.assistances?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
   });
   if(jogadoresPartida.length===0){
     const st=stats0;
-    jogadoresPartida.push({nome:jogadorRef,kills:st.kills?.value||0,assistencias:st.assists?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
+    jogadoresPartida.push({nome:mapearConta(jogadorRef),kills:st.kills?.value||0,assistencias:st.assists?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
   }
   partidaSelecionada={mapa,won,rW,rL,idx,data:dataPartida,timestamp};
   document.getElementById('match-result').value=won?'win':'loss';
