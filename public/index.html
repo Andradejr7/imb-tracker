@@ -748,14 +748,13 @@ function selecionarPartidaReal(idx){
     if(!nomeOriginal) return;
     const todosENomesMapeados = [...TODOS_JOGADORES, ...Object.keys(MAPEAMENTO_CONTAS)];
     if(!todosENomesMapeados.some(j=>j.toLowerCase()===nomeOriginal.toLowerCase())) return;
-    const nome = mapearConta(nomeOriginal);
     const st=s.stats||{};
-    if(jogadoresPartida.some(j=>j.nome===nome)) return;
-    jogadoresPartida.push({nome,kills:st.kills?.value||0,deaths:st.deaths?.value||0,assistencias:st.assists?.value||st.assistances?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
+    if(jogadoresPartida.some(j=>j.nome.toLowerCase()===nomeOriginal.toLowerCase())) return;
+    jogadoresPartida.push({nome:nomeOriginal,kills:st.kills?.value||0,deaths:st.deaths?.value||0,assistencias:st.assists?.value||st.assistances?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
   });
   if(jogadoresPartida.length===0){
     const st=stats0;
-    jogadoresPartida.push({nome:mapearConta(jogadorRef),kills:st.kills?.value||0,assistencias:st.assists?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
+    jogadoresPartida.push({nome:jogadorRef,kills:st.kills?.value||0,assistencias:st.assists?.value||0,plants:0,clutch:st.clutches?.value||0,ace:(st.kills5K?.value||0)>0||(st.aces?.value||0)>0,teamkills:st.teamKills?.value||0});
   }
   partidaSelecionada={mapa,won,rW,rL,idx,data:dataPartida,timestamp};
   document.getElementById('match-result').value=won?'win':'loss';
@@ -880,7 +879,7 @@ async function registrarPartida(){
     const{pts,det}=calcPontos(j,jogadoresPartida);
     const ptsFinal=pontosManual[j.nome]!==undefined?pontosManual[j.nome]:pts;
     const detFinal=pontosManual[j.nome]!==undefined?[...det,'✎ ajuste manual']:det;
-    return{nome:j.nome,kills:j.kills,deaths:j.deaths||0,assistencias:j.assistencias||0,plants:j.plants||0,clutch:j.clutch||0,ace:!!j.ace,teamkills:j.teamkills||0,pts:ptsFinal,det:detFinal};
+    return{nome:mapearConta(j.nome),kills:j.kills,deaths:j.deaths||0,assistencias:j.assistencias||0,plants:j.plants||0,clutch:j.clutch||0,ace:!!j.ace,teamkills:j.teamkills||0,pts:ptsFinal,det:detFinal};
   });
   const tsApi=partidaSelecionada?.timestamp?new Date(partidaSelecionada.timestamp).getTime():null;
   estado.partidas.push({data,mapa,resultado:vitoria?'vitoria':'derrota',pontuacoes,ts:Date.now(),ts_api:tsApi});
@@ -1362,7 +1361,7 @@ async function registrarPartidaManual() {
     const{pts,det} = calcPontos(j, jogadores);
     const ptsFinal = pontosManualM[j.nome] !== undefined ? pontosManualM[j.nome] : pts;
     const detFinal = pontosManualM[j.nome] !== undefined ? [...det, '✎ ajuste manual'] : det;
-    return {nome:j.nome,kills:j.kills,deaths:0,assistencias:j.assistencias,plants:j.plants,clutch:j.clutch||0,ace:!!j.ace,teamkills:j.teamkills,pts:ptsFinal,det:detFinal};
+    return {nome:mapearConta(j.nome),kills:j.kills,deaths:0,assistencias:j.assistencias,plants:j.plants,clutch:j.clutch||0,ace:!!j.ace,teamkills:j.teamkills,pts:ptsFinal,det:detFinal};
   });
 
   const estado = await getEstado();
