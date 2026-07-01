@@ -807,7 +807,17 @@ function renderizarTabela(){
   const tbody=document.getElementById('edit-tbody'); tbody.innerHTML='';
   jogadoresPartida.forEach((j,i)=>{
     const tr=document.createElement('tr'); if(i%2===0) tr.className='hl-row';
-    tr.innerHTML=`<td style="font-weight:700;font-size:12px;letter-spacing:1px;">${j.nome}</td>
+    const isMapeado = Object.keys(MAPEAMENTO_CONTAS).some(k=>k.toLowerCase()===j.nome.toLowerCase());
+    const nomeCell = isMapeado
+      ? `<div style="font-weight:700;font-size:12px;letter-spacing:1px;">${j.nome}</div>
+         <div style="margin-top:4px;">
+           <select id="map_${i}" class="result-select" style="font-size:10px;padding:2px 6px;" onchange="updJ(${i},'nomeReal',this.value)">
+             ${TODOS_JOGADORES.map(jj=>`<option value="${jj}" ${(j.nomeReal||MAPEAMENTO_CONTAS[j.nome])===jj?'selected':''}>${jj}</option>`).join('')}
+           </select>
+         </div>`
+      : `<span style="font-weight:700;font-size:12px;letter-spacing:1px;">${j.nome}</span>`;
+
+    tr.innerHTML=`<td>${nomeCell}</td>
       <td><input type="number" min="0" max="99" value="${j.kills}" id="k_${i}" onchange="updJ(${i},'kills',this.value)"/></td>
       <td><input type="number" min="0" max="99" value="${j.assistencias}" id="a_${i}" onchange="updJ(${i},'assistencias',this.value)"/></td>
       <td><input type="number" min="0" max="20" value="${j.plants||0}" id="pl_${i}" onchange="updJ(${i},'plants',this.value)"/></td>
@@ -819,7 +829,8 @@ function renderizarTabela(){
 }
 
 function updJ(i,campo,val){
-  jogadoresPartida[i][campo]=['kills','assistencias','plants','clutch'].includes(campo)?parseInt(val)||0:val;
+  if(campo==='nomeReal'){jogadoresPartida[i].nomeReal=val;}
+  else{jogadoresPartida[i][campo]=['kills','assistencias','plants','clutch'].includes(campo)?parseInt(val)||0:val;}
   atualizarPrevia();
 }
 
@@ -879,7 +890,7 @@ async function registrarPartida(){
     const{pts,det}=calcPontos(j,jogadoresPartida);
     const ptsFinal=pontosManual[j.nome]!==undefined?pontosManual[j.nome]:pts;
     const detFinal=pontosManual[j.nome]!==undefined?[...det,'✎ ajuste manual']:det;
-    return{nome:mapearConta(j.nome),kills:j.kills,deaths:j.deaths||0,assistencias:j.assistencias||0,plants:j.plants||0,clutch:j.clutch||0,ace:!!j.ace,teamkills:j.teamkills||0,pts:ptsFinal,det:detFinal};
+    return{nome:j.nomeReal||mapearConta(j.nome),kills:j.kills,deaths:j.deaths||0,assistencias:j.assistencias||0,plants:j.plants||0,clutch:j.clutch||0,ace:!!j.ace,teamkills:j.teamkills||0,pts:ptsFinal,det:detFinal};
   });
   const tsApi=partidaSelecionada?.timestamp?new Date(partidaSelecionada.timestamp).getTime():null;
   estado.partidas.push({data,mapa,resultado:vitoria?'vitoria':'derrota',pontuacoes,ts:Date.now(),ts_api:tsApi});

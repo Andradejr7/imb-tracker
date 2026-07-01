@@ -5993,6 +5993,393 @@
       ],
       "ts": 1782441371745,
       "ts_api": 1782426744014
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Bank",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 9,
+          "deaths": 7,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 1,
+          "pts": 0,
+          "det": [
+            "+1 (mais kills)",
+            "-1 (amiguinho)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 3,
+          "deaths": 7,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 6,
+          "deaths": 6,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 5,
+          "deaths": 6,
+          "assistencias": 3,
+          "plants": 1,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3,
+          "det": [
+            "+2 (clutch)",
+            "+1 (plants)"
+          ]
+        }
+      ],
+      "ts": 1782477348322,
+      "ts_api": 1782430091412
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Bank",
+      "resultado": "derrota",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 6,
+          "deaths": 7,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1.5,
+          "det": [
+            "+1 (mais kills)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 5,
+          "deaths": 5,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2.5,
+          "det": [
+            "+2 (clutch)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 6,
+          "deaths": 7,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        }
+      ],
+      "ts": 1782477411863,
+      "ts_api": 1782433589904
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Nighthaven Labs",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 1,
+          "deaths": 4,
+          "assistencias": 4,
+          "plants": 1,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 3.5,
+          "det": [
+            "+2 (clutch)",
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 14,
+          "deaths": 4,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 4,
+          "det": [
+            "+2 (clutch)",
+            "+1 (mais kills)",
+            "+1 (10+ kills)"
+          ]
+        }
+      ],
+      "ts": 1782477442369,
+      "ts_api": 1782435782423
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Bank",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 1,
+          "deaths": 5,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 2,
+          "deaths": 4,
+          "assistencias": 4,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 4,
+          "deaths": 4,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 13,
+          "deaths": 2,
+          "assistencias": 3,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (10+ kills)"
+          ]
+        }
+      ],
+      "ts": 1782477468816,
+      "ts_api": 1782437933199
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Nighthaven Labs",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 6,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (mais kills)"
+          ]
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 5,
+          "deaths": 1,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 1,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2,
+          "det": [
+            "+2 (clutch)"
+          ]
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 3,
+          "deaths": 2,
+          "assistencias": 1,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 1,
+          "det": [
+            "+1 (plants)"
+          ]
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 3,
+          "deaths": 2,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0.5,
+          "det": [
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1782477488689,
+      "ts_api": 1782439380597
+    },
+    {
+      "data": "2026-06-25",
+      "mapa": "Kafe Dostoyevsky",
+      "resultado": "vitoria",
+      "pontuacoes": [
+        {
+          "nome": "IMB_And-",
+          "kills": 4,
+          "deaths": 1,
+          "assistencias": 1,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Shell",
+          "kills": 3,
+          "deaths": 1,
+          "assistencias": 2,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bentoo",
+          "kills": 4,
+          "deaths": 1,
+          "assistencias": 0,
+          "plants": 0,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 0,
+          "det": []
+        },
+        {
+          "nome": "IMB_Bimba",
+          "kills": 5,
+          "deaths": 1,
+          "assistencias": 5,
+          "plants": 1,
+          "clutch": 0,
+          "ace": false,
+          "teamkills": 0,
+          "pts": 2.5,
+          "det": [
+            "+1 (mais kills)",
+            "+1 (plants)",
+            "+0.5 (mais assists)"
+          ]
+        }
+      ],
+      "ts": 1782477521824,
+      "ts_api": 1782441120847
     }
   ],
   "temporadas": [
